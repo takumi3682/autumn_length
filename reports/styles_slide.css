@@ -1,0 +1,94 @@
+/* ---------------------------------------
+ 	Base font(Japanese):Hiragino
+ 	Latin font:SF Pro
+   --------------------------------------- */
+
+.reveal {
+	font-family::
+		"Hiragino Sans",
+		"Hiragino Kaku Gothic ProN",
+		-apple-system,
+		BlinkMacSystemFont,
+		sans-serif;
+}
+
+/* 英数字だけ SF Pro に自動切り替え */
+.reveal {
+	font-feature-settings: "liga", "kern";
+	font-family:
+		"Hiragino Sans",
+		"Hiragino Kaku Gothic ProN",
+		-apple-system,
+		BlinkMacSystemFont,
+		sans-serif;
+}
+
+/* 英数字を SF Pro 優先にする */
+.reveal *:lang(en),
+.reveal code,
+.reveal strong:lang(en),
+.reveal em:lang(en){
+	font-family:
+		-apple-system,
+		BlinkMacSystemFont,
+		"SF Pro",
+		"Helvetica Neue",
+		Arial,
+		sans-serif;
+}
+
+/* ---------------------------------------
+	Font size tuning for moon theme
+   --------------------------------------- */
+
+/* 全体の基本サイズ（少し小さめ） */
+.reveal {
+	font-size:28px;
+}
+
+/* 見出しの調整 */
+.reveal h1{
+	font-size: 1.6em;
+	font-weight: 700
+}
+
+.reveal h2{
+	font-size: 1.3em;
+	font-weight: 600
+}
+
+.reveal h3{
+	font-size: 1.15em;
+	font-weight: 600
+}
+
+/* タイトルスライド用 */
+.reveal .title {
+  font-size: 2.0em;
+  font-weight: 700;
+}
+
+.reveal .subtitle {
+  font-size: 1.2em;
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* 段落の行間を広げる */
+.reveal p{
+	line-height: 1.5;
+}
+
+/* 箇条書きの読みやすさ向上 */
+.reveal ul,
+.reveal ol {
+	font-size: 0.9em;
+	line-heigt: 1.4;
+}
+
+/* スライド左右の余白を少し広げる */
+.reveal .slides{
+	padding: 0.40px;
+}
+
+

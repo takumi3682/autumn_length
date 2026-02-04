@@ -1,0 +1,88 @@
+/* ---------------------------------------
+ 	英数字:SF Pro
+   --------------------------------------- */
+
+*:lang(en),
+code:lang(en),
+pre:lang(en){
+	font-family:
+		-apple-system,
+		"SF Pro",
+		BlinkMacSystemFont,
+		"Segoe UI",
+		sans-serif;
+}
+
+/* 見出し（日本語）:ヒラギノ角ゴシック */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family:
+		"Hiragino Sans",
+		"Hiragino Kaku Gothic ProN",
+		"Meiryo",
+		sans-serif;
+	font-weight: 600;
+}
+
+/* 本文（日本語）:ヒラギノ明朝 */
+body, p, li, td, th {
+	font-family:
+		"Hiragino Mincho ProN",
+		"Hiragino Mincho Pro",
+		"Yu Mincho",
+		serif;
+	font-weight: 400;
+	line-height: 1.6;
+}
+
+/* コードブロック */
+code, pre {
+	font-family:
+		"SF Mono",
+		"Menlo",
+		"Consolas",
+		monospace;}
+
+/* ---------------------------------------
+	Font size tuning for moon theme
+   --------------------------------------- */
+
+/* 全体の基本サイズ（少し小さめ） */
+.reveal {
+	font-size:28px;
+}
+
+/* 見出しの調整 */
+.reveal h1{
+	font-size: 1.6em;
+	font-weight: 700
+}
+
+.reveal h2{
+	font-size: 1.3em;
+	font-weight: 600
+}
+
+.reveal h3{
+	font-size: 1.15em;
+	font-weight: 600
+}
+
+/* 段落の行間を広げる */
+.reveal p{
+	line-height: 1.5;
+}
+
+/* 箇条書きの読みやすさ向上 */
+.reveal ul,
+.reveal ol {
+	font-size: 0.9em;
+	line-heigt: 1.4;
+}
+
+/* スライド左右の余白を少し広げる */
+.reveal .slides{
+	padding: 0.40px;
+}
+
+

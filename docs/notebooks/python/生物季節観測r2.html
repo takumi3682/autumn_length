@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>r2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-ff63373b1067ca6f91cf1456aa1f00a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<p>生物気象観測</p>
+<div id="cell-1" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_project_root(marker<span class="op">=</span><span class="st">"project_paths.py"</span>) <span class="op">-&gt;</span> Path:</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> [p, <span class="op">*</span>p.parents]:</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (d <span class="op">/</span> marker).exists():</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(d))</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> d</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f"Could not find </span><span class="sc">{</span>marker<span class="sc">}</span><span class="ss"> from cwd=</span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> add_project_root()</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Project root:"</span>, PROJECT_ROOT)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> project_paths <span class="im">import</span> ROOT <span class="im">as</span> PROJECT, JMA_DATA, OUT, FIG, TAB, REP, CFG</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> project_paths <span class="im">import</span> OUT</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#out_dir = OUT / "JMA_data"</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> meteo_lib.core <span class="im">import</span> getBlock, get_HourlyData, get_10minData</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> meteo_lib.paths <span class="im">import</span> JMA_DATA, JMA_GPV_DATA, ERA5_DATA, CACHE_DIR</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data root:"</span>,JMA_DATA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The autoreload extension is already loaded. To reload it, use:
+  %reload_ext autoreload
+Project root: /Users/takumi/Projects/meteo-analysis/JMA
+Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
+</div>
+</div>
+<div id="cell-2" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta, date, time</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>mpl.rcParams[<span class="st">"font.family"</span>] <span class="op">=</span> <span class="st">"Hiragino Sans"</span>   <span class="co"># 例：Noto Sans CJK JP でも可</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>mpl.rcParams[<span class="st">"axes.unicode_minus"</span>] <span class="op">=</span> <span class="va">False</span>    <span class="co"># －が豆腐になるのを回避</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.dates <span class="im">as</span> mdates</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.gridspec <span class="im">as</span> gridspec</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> FuncFormatter, MultipleLocator</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> metpy.units <span class="im">import</span> units</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> metpy.calc <span class="im">import</span> dewpoint_from_relative_humidity</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> datetime_value(x, column_value):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    year <span class="op">=</span> column_value  <span class="co"># 本来の年</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  year = 2000  # 図化のため2000年に揃える</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> np.isnan(x): x <span class="op">=</span> <span class="bu">int</span>(x)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  print('ｘ ', year, x)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.notna(x):  <span class="co"># 欠測値には0が入力されている</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        mon, day <span class="op">=</span> np.<span class="bu">divmod</span>(x, <span class="dv">100</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#        print(mon, day)</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        date_string <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>year<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>mon<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>day<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        date <span class="op">=</span> pd.to_datetime(date_string, <span class="bu">format</span><span class="op">=</span><span class="st">'%Y-%m-</span><span class="sc">%d</span><span class="st">'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> date</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span>  pd.NaT</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:4,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 生物季節観測のcsvファイルを読み込む</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_data(fn):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    cs1 <span class="op">=</span> [<span class="st">'rm'</span>, <span class="st">'番号'</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    cs2 <span class="op">=</span> [<span class="st">'平年値'</span>, <span class="st">'最早値'</span>, <span class="st">'最晩値'</span>, <span class="st">'最早年'</span>, <span class="st">'最晩年'</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    end_year <span class="op">=</span> <span class="dv">2024</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    print(fn)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    title_row <span class="op">=</span> pd.read_csv(fn, encoding<span class="op">=</span><span class="st">'shift-jis'</span>, nrows<span class="op">=</span><span class="dv">1</span>, header<span class="op">=</span><span class="va">None</span>).iloc[<span class="dv">0</span>,<span class="dv">1</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(fn, header<span class="op">=</span><span class="dv">1</span>, encoding<span class="op">=</span><span class="st">'shift-JIS'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                 usecols<span class="op">=</span><span class="kw">lambda</span> column: <span class="bu">all</span>(substring <span class="kw">not</span> <span class="kw">in</span> column <span class="cf">for</span> substring <span class="kw">in</span> cs1),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                 index_col<span class="op">=</span><span class="st">'地点名'</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.drop(columns<span class="op">=</span>cs2)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.drop(df.columns[df.columns<span class="op">&gt;</span><span class="bu">str</span>(end_year)], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    df.index <span class="op">=</span> df.index.<span class="bu">str</span>.strip()  <span class="co"># indexから空白文字を削除</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.where(df<span class="op">&gt;=</span><span class="dv">100</span>, other<span class="op">=</span>np.nan)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#    display(df)</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> df.columns:</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col<span class="op">==</span><span class="st">'1969'</span>: <span class="bu">print</span>(<span class="st">'統計値'</span>, col, df[col].<span class="bu">max</span>(), df[col].<span class="bu">min</span>())</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (df[col].median() <span class="op">&lt;</span> <span class="dv">1000</span>) <span class="kw">and</span> (df[col] <span class="op">&gt;</span> <span class="dv">1000</span>).<span class="bu">any</span>():</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(datetime_value, args<span class="op">=</span>(df[col].name,))</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            df[col] <span class="op">=</span> df[col] <span class="op">-</span> timedelta(days<span class="op">=</span><span class="dv">365</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co">#      print(col, df[col], "timedelta")</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            df[col] <span class="op">=</span> df[col]</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            df[col] <span class="op">=</span> df[col].<span class="bu">apply</span>(datetime_value, args<span class="op">=</span>(df[col].name,))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="co">#            print(col, df[col])</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.transpose()  <span class="co"># 行と列を入れ替える</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    df.index.name <span class="op">=</span> <span class="st">'年'</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df, title_row</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-5" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:6,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> JMA_DATA <span class="op">/</span> <span class="st">'raw/生物季節観測'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>subject <span class="op">=</span> {<span class="st">'うめ開花'</span>:<span class="dv">1</span>, <span class="st">'さくら開花'</span>:<span class="dv">4</span>, <span class="st">'さくら満開'</span>:<span class="dv">5</span>, <span class="st">'あじさい開花'</span>:<span class="dv">9</span>, <span class="st">'すすき開花'</span>:<span class="dv">11</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>           <span class="st">'いちょう黄葉'</span>:<span class="dv">13</span>, <span class="st">'いちょう落葉'</span>:<span class="dv">14</span>,<span class="st">'かえで紅葉'</span>:<span class="dv">15</span>,<span class="st">'かえで落葉'</span>:<span class="dv">16</span>, <span class="st">'うぐいす初鳴'</span>:<span class="dv">18</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>           <span class="st">'つばめ初見'</span>:<span class="dv">19</span>, <span class="st">'とのさまがえる初見'</span>:<span class="dv">22</span>, <span class="st">'あぶらぜみ初鳴'</span>:<span class="dv">25</span>, <span class="st">'りんご開花'</span>:<span class="dv">91</span>, <span class="st">'みんみんぜみ初鳴'</span>:<span class="dv">119</span>}</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>sub <span class="op">=</span> <span class="st">'いちょう黄葉'</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>sub_no <span class="op">=</span> <span class="bu">str</span>(subject[sub]).zfill(<span class="dv">3</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>fn <span class="op">=</span> fp <span class="op">/</span> <span class="ss">f'</span><span class="sc">{</span>sub_no<span class="sc">}{</span>sub<span class="sc">}</span><span class="ss">.csv'</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"file name:"</span>, fn)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># DataFrameを読み込んで列名を変更し、連結する</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>df, title_row <span class="op">=</span> read_data(fn)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>display(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>file name: /Users/takumi/Projects/MetData/JMA/raw/生物季節観測/013いちょう黄葉.csv
+統計値 1969 1204.0 1013.0</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">地点名</th>
+<th data-quarto-table-cell-role="th">稚内</th>
+<th data-quarto-table-cell-role="th">留萌</th>
+<th data-quarto-table-cell-role="th">旭川</th>
+<th data-quarto-table-cell-role="th">網走</th>
+<th data-quarto-table-cell-role="th">札幌</th>
+<th data-quarto-table-cell-role="th">岩見沢</th>
+<th data-quarto-table-cell-role="th">帯広</th>
+<th data-quarto-table-cell-role="th">釧路</th>
+<th data-quarto-table-cell-role="th">根室</th>
+<th data-quarto-table-cell-role="th">室蘭</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">徳島</th>
+<th data-quarto-table-cell-role="th">名瀬</th>
+<th data-quarto-table-cell-role="th">与那国島</th>
+<th data-quarto-table-cell-role="th">西表島</th>
+<th data-quarto-table-cell-role="th">石垣島</th>
+<th data-quarto-table-cell-role="th">宮古島</th>
+<th data-quarto-table-cell-role="th">久米島</th>
+<th data-quarto-table-cell-role="th">那覇</th>
+<th data-quarto-table-cell-role="th">名護</th>
+<th data-quarto-table-cell-role="th">南大東島</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">年</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1953</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>1953-10-15</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1954</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>1954-10-12</td>
+<td>1954-10-26</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1955</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>1955-10-12</td>
+<td>1955-11-02</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1956</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>1956-11-01</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">1957</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>1957-11-02</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2020</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>2020-11-02</td>
+<td>NaT</td>
+<td>2020-10-31</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>2020-12-08</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2021</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>2021-10-29</td>
+<td>NaT</td>
+<td>2021-10-29</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>2021-12-02</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2022</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>2022-11-04</td>
+<td>NaT</td>
+<td>2022-11-06</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2023</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>2023-11-05</td>
+<td>NaT</td>
+<td>2023-11-02</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>2023-12-04</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024</th>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>2024-11-12</td>
+<td>NaT</td>
+<td>2024-11-05</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>...</td>
+<td>2024-12-12</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+<td>NaT</td>
+</tr>
+</tbody>
+</table>
+
+<p>72 rows × 102 columns</p>
+</div>
+</div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="28">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> to_refdate(s: pd.Series, ref_year: <span class="bu">int</span>) <span class="op">-&gt;</span> pd.Series:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 入力をまず datetime に統一（object混在対策）</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> pd.to_datetime(s, errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> s.notna()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># いったん全NaTの Series を用意</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.Series(pd.NaT, index<span class="op">=</span>s.index, dtype<span class="op">=</span><span class="st">"datetime64[ns]"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 有効値のみ、月日を取り出して基準年で生成</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> mask.<span class="bu">any</span>():</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        out.loc[mask] <span class="op">=</span> pd.to_datetime({</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>            <span class="st">"year"</span>:  np.full(mask.<span class="bu">sum</span>(), ref_year, dtype<span class="op">=</span><span class="bu">int</span>),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>            <span class="st">"month"</span>: s.loc[mask].dt.month,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"day"</span>:   s.loc[mask].dt.day</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        }, errors<span class="op">=</span><span class="st">"raise"</span>)  <span class="co"># ref_yearが平年のとき2/29でエラーにしたいなら "raise"</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="cell-7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:6352,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778691761,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-outputid="7f064cb9-5682-412f-c373-57d570d35b12" data-execution_count="31">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>REF_YEAR <span class="op">=</span> <span class="dv">2001</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>place <span class="op">=</span> (<span class="st">'青森'</span>, <span class="st">'秋田'</span>, <span class="st">'盛岡'</span>, <span class="st">'山形'</span>, <span class="st">'仙台'</span>, <span class="st">'福島'</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">8</span>), tight_layout<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">'whitegrid'</span>, context<span class="op">=</span><span class="st">'talk'</span>, font_scale<span class="op">=</span><span class="fl">1.0</span>, font<span class="op">=</span><span class="st">'Hiragino Sans'</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> fig.add_subplot(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>month_min, month_max <span class="op">=</span> <span class="dv">9</span>, <span class="dv">12</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> calendar.monthrange(REF_YEAR, month_max)[<span class="dv">1</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>y_min, y_max <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>month_min<span class="sc">}</span><span class="ss">/1'</span>, <span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>month_max<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>days<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>y_span <span class="op">=</span> pd.to_datetime([y_min, y_max])</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(y_span)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>y_df <span class="op">=</span> pd.DataFrame({p: to_refdate(df[p], REF_YEAR) <span class="cf">for</span> p <span class="kw">in</span> place})</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#print(y_df)</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>markers <span class="op">=</span> [<span class="st">"D"</span>, <span class="st">"o"</span>, <span class="st">"s"</span>, <span class="st">"^"</span>, <span class="st">"v"</span>, <span class="st">"P"</span>]   <span class="co"># 好きに増やせる</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>colors  <span class="op">=</span> [<span class="st">"tab:blue"</span>, <span class="st">"tab:orange"</span>, <span class="st">"tab:green"</span>, </span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>           <span class="st">"tab:red"</span>, <span class="st">"tab:purple"</span>, <span class="st">"tab:brown"</span>]</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p, m, c <span class="kw">in</span> <span class="bu">zip</span>(place, markers, colors):</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    sns.lineplot(</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span>y_df.index, y<span class="op">=</span>y_df[p], </span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>        linestyle<span class="op">=</span><span class="st">'-'</span>, color<span class="op">=</span>c,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>        marker<span class="op">=</span>m, label<span class="op">=</span>p, ax<span class="op">=</span>ax1)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>ax1.<span class="bu">set</span>(title<span class="op">=</span>title_row, xlabel<span class="op">=</span><span class="st">'年'</span>, ylabel<span class="op">=</span>title_row)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>plt.gca().yaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%m/</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.xticks(df.index[::<span class="dv">5</span>])  <span class="co">#　x軸ラベルの表示間隔を5に指定</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>)  <span class="co"># ラベルを45度回転させる</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>handles, labels <span class="op">=</span> ax1.get_legend_handles_labels()</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>ax1.legend(handles, labels, ncol<span class="op">=</span><span class="bu">len</span>(labels), loc<span class="op">=</span><span class="st">"upper center"</span>, fontsize<span class="op">=</span><span class="dv">14</span>)</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.legend()</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>plt.savefig(OUT <span class="op">/</span> <span class="ss">f'</span><span class="sc">{</span>fp<span class="sc">}{</span>sub<span class="sc">}</span><span class="ss">.png'</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="生物季節観測r2_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:15,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778691761,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="41">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== 入力パラメータ =====</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>REF_YEAR <span class="op">=</span> <span class="dv">2001</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>place    <span class="op">=</span> <span class="st">'仙台'</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>sub      <span class="op">=</span> (<span class="st">'かえで紅葉'</span>, <span class="st">'かえで落葉'</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#sub      = ('さくら開花', 'あじさい開花')</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>subject  <span class="op">=</span> {<span class="st">'うめ開花'</span>:<span class="dv">1</span>, <span class="st">'さくら開花'</span>:<span class="dv">4</span>, <span class="st">'さくら満開'</span>:<span class="dv">5</span>, <span class="st">'あじさい開花'</span>:<span class="dv">9</span>, <span class="st">'すすき開花'</span>:<span class="dv">11</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>            <span class="st">'いちょう黄葉'</span>:<span class="dv">13</span>, <span class="st">'いちょう落葉'</span>:<span class="dv">14</span>,<span class="st">'かえで紅葉'</span>:<span class="dv">15</span>,<span class="st">'かえで落葉'</span>:<span class="dv">16</span>, <span class="st">'うぐいす初鳴'</span>:<span class="dv">18</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="st">'つばめ初見'</span>:<span class="dv">19</span>, <span class="st">'とのさまがえる初見'</span>:<span class="dv">22</span>, <span class="st">'あぶらぜみ初鳴'</span>:<span class="dv">25</span>, <span class="st">'りんご開花'</span>:<span class="dv">91</span>, <span class="st">'みんみんぜみ初鳴'</span>:<span class="dv">119</span>}</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> JMA_DATA <span class="op">/</span> <span class="st">'raw/生物季節観測'</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fp)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># === 入力CSVパス ===</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>sub_no_lst <span class="op">=</span> [<span class="bu">str</span>(subject[s]).zfill(<span class="dv">3</span>) <span class="cf">for</span> s <span class="kw">in</span> sub]</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>fn_lst <span class="op">=</span> [fp <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>no<span class="sc">}{</span>name<span class="sc">}</span><span class="ss">.csv"</span> <span class="cf">for</span> no, name <span class="kw">in</span> <span class="bu">zip</span>(sub_no_lst, sub)]</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># === 読み込み（read_data は (df, title) を返す想定：列=地点名, 行=年, subject列を付ける） ===</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>parts <span class="op">=</span> []</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> name, path <span class="kw">in</span> <span class="bu">zip</span>(sub, fn_lst):</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    df_i, title_i <span class="op">=</span> read_data(path)      <span class="co"># df_i: index=年, columns=地点名, 値=日付</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    ser_place <span class="op">=</span> df_i[place].rename(<span class="st">"date"</span>)     <span class="co"># 1地点だけ取り出す → Series</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    tmp <span class="op">=</span> ser_place.to_frame().reset_index().rename(columns<span class="op">=</span>{<span class="st">"index"</span>: <span class="st">"年"</span>})</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    tmp[<span class="st">"subject"</span>] <span class="op">=</span> name</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>    parts.append(tmp)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#print("parts:", parts)</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>df_long <span class="op">=</span> pd.concat(parts, ignore_index<span class="op">=</span><span class="va">True</span>)  <span class="co"># 列: 年, date, subject</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 年をx、同じ年の「月日だけ」をREF_YEARにそろえたdateをyとして描く</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>df_long[<span class="st">"refdate"</span>] <span class="op">=</span> to_refdate(df_long[<span class="st">"date"</span>], REF_YEAR)</span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"df_long"</span>, df_long)</span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>fn <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>place<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">.csv"</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(fn)</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>df_long.to_csv(OUT <span class="op">/</span> fn, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co"># === プロット ===</span></span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>sns.<span class="bu">set</span>(style<span class="op">=</span><span class="st">'whitegrid'</span>, context<span class="op">=</span><span class="st">'talk'</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.rcParams[<span class="st">'font.family'</span>] <span class="op">=</span> <span class="st">'Hiragino Sans'</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>df_long[<span class="st">'年'</span>] <span class="op">=</span> pd.to_numeric(df_long[<span class="st">'年'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co">#print(df_long.dtypes)</span></span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>ax.set_xlim(<span class="dv">2000</span>, <span class="dv">2024</span>)</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>ax.set_xticks(<span class="bu">range</span>(<span class="dv">2000</span>,<span class="dv">2024</span>,<span class="dv">10</span>))</span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>month_min, month_max <span class="op">=</span> <span class="dv">9</span>, <span class="dv">12</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> calendar.monthrange(REF_YEAR, month_max)[<span class="dv">1</span>]</span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>y_min <span class="op">=</span> pd.to_datetime([<span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>month_min<span class="sc">}</span><span class="ss">/1'</span>]),</span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>y_max <span class="op">=</span> pd.to_datetime([<span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>month_max<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>days<span class="sc">}</span><span class="ss">'</span>]) <span class="op">+</span> timedelta(days<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>ax.set_ylim(y_min, y_max)</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co">#ax.set_ylim(pd.to_datetime([f'{REF_YEAR}/{month_min}/1', f'{REF_YEAR}/{month_max}/{days}']))</span></span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>sns.lineplot(</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    data<span class="op">=</span>df_long.sort_values([<span class="st">"subject"</span>, <span class="st">"年"</span>]),</span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"年"</span>, y<span class="op">=</span><span class="st">"refdate"</span>, hue<span class="op">=</span><span class="st">"subject"</span>, style<span class="op">=</span><span class="st">"subject"</span>,</span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>    markers<span class="op">=</span><span class="va">True</span>, dashes<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>ax</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%m/</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="ss">f"</span><span class="sc">{</span>place<span class="sc">}</span><span class="ss">：</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> と </span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"年"</span>)<span class="op">;</span> ax.set_ylabel(<span class="st">"観測日（MM/DD, 基準年置換）"</span>)</span>
+<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#sns.move_legend(ax, "upper center", bbox_to_anchor=(0.5, 1.12), ncol=len(sub), frameon=False)</span></span>
+<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a>sns.move_legend(ax, <span class="st">"upper center"</span>, title<span class="op">=</span><span class="va">None</span>)</span>
+<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>/Users/takumi/Projects/MetData/JMA/raw/生物季節観測
+統計値 1969 1201.0 1002.0
+統計値 1969 1227.0 1027.0
+df_long         年       date subject    refdate
+0    1953        NaT   かえで紅葉        NaT
+1    1954        NaT   かえで紅葉        NaT
+2    1955        NaT   かえで紅葉        NaT
+3    1956 1956-10-25   かえで紅葉 2001-10-25
+4    1957 1957-10-28   かえで紅葉 2001-10-28
+..    ...        ...     ...        ...
+139  2020 2020-11-28   かえで落葉 2001-11-28
+140  2021 2021-12-01   かえで落葉 2001-12-01
+141  2022 2022-11-29   かえで落葉 2001-11-29
+142  2023 2023-12-08   かえで落葉 2001-12-08
+143  2024 2024-12-05   かえで落葉 2001-12-05
+
+[144 rows x 4 columns]
+仙台_かえで紅葉_かえで落葉.csv</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="生物季節観測r2_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="35">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># まず安全に datetime 化（既に datetime ならこの行は不要）</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#df['refdate'] = pd.to_datetime(df['refdate'], errors='coerce')</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 年×subject を横持ち（wide）に</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> (df_long</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>     .dropna(subset<span class="op">=</span>[<span class="st">'refdate'</span>])        <span class="co"># refdate がない行は除外（任意）</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>     .pivot_table(index<span class="op">=</span><span class="st">'年'</span>, columns<span class="op">=</span><span class="st">'subject'</span>, values<span class="op">=</span><span class="st">'refdate'</span>, aggfunc<span class="op">=</span><span class="st">'first'</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>     .rename_axis(<span class="va">None</span>, axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 黄葉〜落葉の日数（落葉 - 黄葉）</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>w[<span class="ss">f'</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">_日数'</span>] <span class="op">=</span> (w.get(sub[<span class="dv">1</span>]) <span class="op">-</span> w.get(sub[<span class="dv">0</span>])).dt.days</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 欲しければ結果を tidy に戻すか、列を選んで表示</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> w[[sub[<span class="dv">0</span>], sub[<span class="dv">1</span>], <span class="ss">f'</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">_日数'</span>]].reset_index()</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(result.head())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      年      かえで紅葉      かえで落葉  かえで紅葉-かえで落葉_日数
+0  1956 2001-10-25        NaT             NaN
+1  1957 2001-10-28 2001-11-10            13.0
+2  1958 2001-11-01        NaT             NaN
+3  1959 2001-11-20 2001-12-05            15.0
+4  1960 2001-11-05 2001-11-26            21.0</code></pre>
+</div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="38">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 前提: w は index=年、列=['いちょう黄葉','いちょう落葉','黄葉→落葉_日数']</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># いちょう黄葉・落葉は "2001-..-.." の refdate（日付）である想定</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x_min, x_max <span class="op">=</span> <span class="dv">1971</span>, <span class="dv">2024</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> w.copy()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>w[sub[<span class="dv">0</span>]] <span class="op">=</span> pd.to_datetime(w[sub[<span class="dv">0</span>]], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>w[sub[<span class="dv">1</span>]] <span class="op">=</span> pd.to_datetime(w[sub[<span class="dv">1</span>]], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co"># y軸用に matplotlib の内部日付数値へ変換（NaTは除外マスクで処理）</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>y_koyo <span class="op">=</span> mdates.date2num(w[sub[<span class="dv">0</span>]])</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>y_rakuyo <span class="op">=</span> mdates.date2num(w[sub[<span class="dv">1</span>]])</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>fig, ax1 <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">11</span>,<span class="dv">7</span>))</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 折れ線（左y軸：月日表示） ---</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>mask_k <span class="op">=</span> (<span class="op">~</span>w[sub[<span class="dv">0</span>]].isna()) <span class="op">&amp;</span> (w.index <span class="op">&gt;</span> x_min) <span class="op">&amp;</span> (w.index <span class="op">&lt;</span> x_max)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>mask_r <span class="op">=</span> (<span class="op">~</span>w[sub[<span class="dv">1</span>]].isna()) <span class="op">&amp;</span> (w.index <span class="op">&gt;</span> x_min) <span class="op">&amp;</span> (w.index <span class="op">&lt;</span> x_max)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>ax1.plot(w.index[mask_k], y_koyo[mask_k], marker<span class="op">=</span><span class="st">'o'</span>, </span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span>sub[<span class="dv">0</span>])</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>ax1.plot(w.index[mask_r], y_rakuyo[mask_r], marker<span class="op">=</span><span class="st">'o'</span>, </span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>         color<span class="op">=</span><span class="st">'orange'</span>, label<span class="op">=</span>sub[<span class="dv">1</span>])</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">'年'</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">'月日'</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>ax1.set_xlim(x_min, x_max)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>ax1.set_xticks(<span class="bu">range</span>(x_min,x_max,<span class="dv">10</span>))</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>y1_min <span class="op">=</span> pd.to_datetime(<span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/10/1'</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>y1_max <span class="op">=</span> pd.to_datetime(<span class="ss">f'</span><span class="sc">{</span>REF_YEAR<span class="sc">}</span><span class="ss">/12/31'</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(y1_min, y1_max)</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>a_k, b_k <span class="op">=</span> np.polyfit(w.index[mask_k], y_koyo[mask_k], <span class="dv">1</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>y_line_num_k <span class="op">=</span> a_k <span class="op">*</span> w.index <span class="op">+</span> b_k</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>y_line_dt_k  <span class="op">=</span> mdates.num2date(y_line_num_k)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>ax1.plot(w.index, y_line_dt_k, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"red"</span>,</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="ss">f'y=</span><span class="sc">{</span>a_k<span class="sc">:.3f}</span><span class="ss">*x  </span><span class="sc">{</span>b_k<span class="sc">:+.3f}</span><span class="ss">'</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>a_r, b_r <span class="op">=</span> np.polyfit(w.index[mask_r], y_rakuyo[mask_r], <span class="dv">1</span>)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>y_line_num_r <span class="op">=</span> a_r <span class="op">*</span> w.index <span class="op">+</span> b_r</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>y_line_dt_r  <span class="op">=</span> mdates.num2date(y_line_num_r)</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>ax1.plot(w.index, y_line_dt_r, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"orange"</span>,</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="ss">f'y=</span><span class="sc">{</span>a_r<span class="sc">:.3f}</span><span class="ss">*x  </span><span class="sc">{</span>b_r<span class="sc">:+.3f}</span><span class="ss">'</span>)</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="co"># y軸を月日表示にする（アンカー年は 2001 年想定）</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>ax1.yaxis.set_major_formatter(mdates.DateFormatter(<span class="st">'%m-</span><span class="sc">%d</span><span class="st">'</span>))</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>ax1.yaxis.set_major_locator(mdates.MonthLocator(bymonthday<span class="op">=</span><span class="dv">1</span>))  <span class="co"># 毎月1日</span></span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="co"># 表示範囲（必要に応じて調整。秋〜冬に絞る例）</span></span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a><span class="co">#ymin = mdates.date2num(pd.Timestamp('2001-09-01'))</span></span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a><span class="co">#ymax = mdates.date2num(pd.Timestamp('2001-12-20'))</span></span>
+<span id="cb14-51"><a href="#cb14-51" aria-hidden="true" tabindex="-1"></a>ax1.set_ylim(y1_min, y1_max)</span>
+<span id="cb14-52"><a href="#cb14-52" aria-hidden="true" tabindex="-1"></a><span class="co">#ax1.grid(True, axis='y', alpha=0.3)</span></span>
+<span id="cb14-53"><a href="#cb14-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-54"><a href="#cb14-54" aria-hidden="true" tabindex="-1"></a><span class="co"># --- 第2y軸：棒グラフ（黄葉→落葉 日数） ---</span></span>
+<span id="cb14-55"><a href="#cb14-55" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> ax1.twinx()</span>
+<span id="cb14-56"><a href="#cb14-56" aria-hidden="true" tabindex="-1"></a>y_d <span class="op">=</span> w[<span class="ss">f'</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">_日数'</span>]</span>
+<span id="cb14-57"><a href="#cb14-57" aria-hidden="true" tabindex="-1"></a><span class="co">#print(y_d[mask_k])</span></span>
+<span id="cb14-58"><a href="#cb14-58" aria-hidden="true" tabindex="-1"></a>ax2.bar(w.index[mask_k], y_d[mask_k], color<span class="op">=</span><span class="st">'blue'</span>,</span>
+<span id="cb14-59"><a href="#cb14-59" aria-hidden="true" tabindex="-1"></a>        alpha<span class="op">=</span><span class="fl">0.35</span>, label<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">〜</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> 日数'</span>)</span>
+<span id="cb14-60"><a href="#cb14-60" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">'日数'</span>)</span>
+<span id="cb14-61"><a href="#cb14-61" aria-hidden="true" tabindex="-1"></a>ax2.set_ylim(<span class="dv">0</span>, <span class="dv">300</span>)</span>
+<span id="cb14-62"><a href="#cb14-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-63"><a href="#cb14-63" aria-hidden="true" tabindex="-1"></a><span class="co">#x_num = mdates.date2num(w.index[mask_k])</span></span>
+<span id="cb14-64"><a href="#cb14-64" aria-hidden="true" tabindex="-1"></a>x_num <span class="op">=</span> w.index[mask_k]</span>
+<span id="cb14-65"><a href="#cb14-65" aria-hidden="true" tabindex="-1"></a>y_num <span class="op">=</span> y_d[mask_k]</span>
+<span id="cb14-66"><a href="#cb14-66" aria-hidden="true" tabindex="-1"></a>a_d, b_d <span class="op">=</span> np.polyfit(x_num, y_num, <span class="dv">1</span>)</span>
+<span id="cb14-67"><a href="#cb14-67" aria-hidden="true" tabindex="-1"></a><span class="co">#x_all = mdates.date2num(w.index)</span></span>
+<span id="cb14-68"><a href="#cb14-68" aria-hidden="true" tabindex="-1"></a>x_all <span class="op">=</span> w.index</span>
+<span id="cb14-69"><a href="#cb14-69" aria-hidden="true" tabindex="-1"></a>y_line <span class="op">=</span> a_d <span class="op">*</span> x_all <span class="op">+</span> b_d</span>
+<span id="cb14-70"><a href="#cb14-70" aria-hidden="true" tabindex="-1"></a>ax2.plot(w.index, y_line, linestyle<span class="op">=</span><span class="st">"--"</span>, color<span class="op">=</span><span class="st">"blue"</span>,</span>
+<span id="cb14-71"><a href="#cb14-71" aria-hidden="true" tabindex="-1"></a>         label<span class="op">=</span><span class="ss">f'y=</span><span class="sc">{</span>a_d<span class="sc">:.3f}</span><span class="ss">*x  </span><span class="sc">{</span>b_d<span class="sc">:+.3f}</span><span class="ss">'</span>)</span>
+<span id="cb14-72"><a href="#cb14-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-73"><a href="#cb14-73" aria-hidden="true" tabindex="-1"></a><span class="co"># 凡例（左右の軸ハンドルを結合）</span></span>
+<span id="cb14-74"><a href="#cb14-74" aria-hidden="true" tabindex="-1"></a>h1, l1 <span class="op">=</span> ax1.get_legend_handles_labels()</span>
+<span id="cb14-75"><a href="#cb14-75" aria-hidden="true" tabindex="-1"></a>h2, l2 <span class="op">=</span> ax2.get_legend_handles_labels()</span>
+<span id="cb14-76"><a href="#cb14-76" aria-hidden="true" tabindex="-1"></a>leg <span class="op">=</span> ax1.legend(h1<span class="op">+</span>h2, l1<span class="op">+</span>l2, fontsize<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb14-77"><a href="#cb14-77" aria-hidden="true" tabindex="-1"></a>                 loc<span class="op">=</span><span class="st">'center right'</span>, title<span class="op">=</span><span class="va">None</span>)  <span class="co"># タイトルは出さない</span></span>
+<span id="cb14-78"><a href="#cb14-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-79"><a href="#cb14-79" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.title(f'{sub[0]}・{sub[1]}（左：月日）と{sub[0]}-{sub[1]}期間（右：日数）')</span></span>
+<span id="cb14-80"><a href="#cb14-80" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f'</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">〜</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> ／ </span><span class="sc">{</span>place<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb14-81"><a href="#cb14-81" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-82"><a href="#cb14-82" aria-hidden="true" tabindex="-1"></a>plt.savefig(OUT <span class="op">/</span> <span class="ss">f'</span><span class="sc">{</span>place<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>sub[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>sub[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">.png'</span>)</span>
+<span id="cb14-83"><a href="#cb14-83" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="生物季節観測r2_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

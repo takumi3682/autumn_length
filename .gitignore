@@ -1,0 +1,18 @@
+# raw data (外付け or 大容量想定)
+data/raw/
+
+# R
+.Rhistory
+.RData
+
+# OS
+.DS_Store
+
+/.quarto/
+**/*.quarto_ipynb
+
+autumn_length_BACKUP/
+autumn_length/
+.Rproj.user/
+.envrc
+data_ext_link
