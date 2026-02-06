@@ -1,6 +1,13 @@
 # raw data (外付け or 大容量想定)
 data/raw/
 
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
 # R
 .Rhistory
 .RData

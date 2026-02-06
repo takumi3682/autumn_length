@@ -142,26 +142,27 @@ No.3682 岩渕　巧
 
   <p class="date">2026-02-07</p>
 </section>
-<section id="データ概要" class="slide level2">
-<h2>データ概要</h2>
+<section id="検討内容" class="slide level2">
+<h2>検討内容</h2>
 <ul>
-<li><p>元データ: 仙台 における生物季節観測データ および 月平均気温から算出した季節平均値</p></li>
-<li><p>「さくら開花」などは年の初め（1月1日）から数えて何日目（Days of Year） で表現</p></li>
-<li><p>spring:3〜5月、summer:6〜8月、autumn:9〜11月、winter:12〜2月　 の平均気温</p></li>
-<li><p>下表は表の抜粋</p></li>
+<li>生物季節観測（特に、かえで や いちょう）が「秋が短くなった」ことを表現できている　⇒　深掘りしてみたい</li>
+<li>使ったデータ: 仙台 における生物季節観測データ および 月平均気温から算出した季節平均値</li>
+<li>生物季節観測は年の初め（1月1日）から数えて何日目（Days of Year） で表現した</li>
+<li>spring:3〜5月、summer:6〜8月、autumn:9〜11月、winter:12〜2月　 の平均気温</li>
+<li>下表は表の抜粋</li>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top" style="font-size:14px; width:100%; table-layout:fixed;">
+<table class="caption-top">
 <thead>
 <tr class="header">
-<th style="text-align: center;" data-quarto-table-cell-role="th">年</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">さくら開花</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">すすき開花</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">いちょう黄葉</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">spring</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">autumn</th>
-<th style="text-align: right;" data-quarto-table-cell-role="th">winter</th>
+<th style="text-align: center;">年</th>
+<th style="text-align: right;">さくら開花</th>
+<th style="text-align: right;">すすき開花</th>
+<th style="text-align: right;">いちょう黄葉</th>
+<th style="text-align: right;">spring</th>
+<th style="text-align: right;">autumn</th>
+<th style="text-align: right;">winter</th>
 </tr>
 </thead>
 <tbody>
@@ -210,69 +211,6 @@ No.3682 岩渕　巧
 <td style="text-align: right;">14.2</td>
 <td style="text-align: right;">2.7</td>
 </tr>
-<tr class="even">
-<td style="text-align: center;">1958</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">254</td>
-<td style="text-align: right;">315</td>
-<td style="text-align: right;">9.4</td>
-<td style="text-align: right;">13.6</td>
-<td style="text-align: right;">3.3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1959</td>
-<td style="text-align: right;">94</td>
-<td style="text-align: right;">253</td>
-<td style="text-align: right;">304</td>
-<td style="text-align: right;">10.9</td>
-<td style="text-align: right;">15.0</td>
-<td style="text-align: right;">2.3</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1960</td>
-<td style="text-align: right;">102</td>
-<td style="text-align: right;">231</td>
-<td style="text-align: right;">305</td>
-<td style="text-align: right;">9.6</td>
-<td style="text-align: right;">14.8</td>
-<td style="text-align: right;">1.3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1961</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">240</td>
-<td style="text-align: right;">307</td>
-<td style="text-align: right;">10.7</td>
-<td style="text-align: right;">15.7</td>
-<td style="text-align: right;">2.4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1962</td>
-<td style="text-align: right;">104</td>
-<td style="text-align: right;">246</td>
-<td style="text-align: right;">309</td>
-<td style="text-align: right;">9.9</td>
-<td style="text-align: right;">14.4</td>
-<td style="text-align: right;">2.0</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;">1963</td>
-<td style="text-align: right;">102</td>
-<td style="text-align: right;">241</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">10.1</td>
-<td style="text-align: right;">13.9</td>
-<td style="text-align: right;">2.4</td>
-</tr>
-<tr class="even">
-<td style="text-align: center;">1964</td>
-<td style="text-align: right;">101</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">10.0</td>
-<td style="text-align: right;">13.6</td>
-<td style="text-align: right;">2.2</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -281,10 +219,9 @@ No.3682 岩渕　巧
 <section id="生物季節観測時系列仙台" class="slide level2">
 <h2>生物季節観測（時系列、仙台）</h2>
 
-<img data-src="../outputs/phenology_timeseries_2x2.png" style="width:100.0%" class="r-stretch"></section>
-<section class="slide level2">
-
-<h3 id="考察">考察</h3>
+<img data-src="../outputs/phenology_timeseries_2x2.png" style="width:70.0%" class="r-stretch"></section>
+<section id="考察" class="slide level2">
+<h2>考察</h2>
 <ul>
 <li><p>うめ開花はばらつきが大きい</p></li>
 <li><p>さくら開花・満開は共に早まっている</p></li>
@@ -299,82 +236,80 @@ No.3682 岩渕　巧
 <li>データを順位（runk）に変換してから計算する相関検定</li>
 <li>2つの変数が単調な関係にあるかどうかを調べる</li>
 <li>外れ値に強く、正規分布である必要がない</li>
-<li>データ数 <span class="math inline">\(n\)</span>、各データペアの順位の差を <span class="math inline">\(d_{i}\)</span>　とすると、</li>
+<li>データ数 <span class="math inline">\(n\)</span>、各データペアの順位の差を<span class="math inline">\(d_{i}\)</span>とすると、</li>
 </ul>
 <p><span class="math display">\[
 \rho = 1 - \frac{6 \sum d_i^2}{n \left( n^2 - 1 \right)}
-\]</span> * Spearmanによる相関係数を先ほどのデータに適用した結果を示す</p>
+\]</span></p>
+<ul>
+<li>Spearmanによる相関係数を先ほどのデータに適用した結果を示す</li>
+</ul>
 </section>
-<section class="slide level2">
-
-
-<img data-src="../outputs/Heatmap.png" style="width:120.0%" class="r-stretch"></section>
-<section class="slide level2">
-
-<h3 id="考察-1">考察</h3>
+<section id="相関ヒートマップspearman" class="slide level2">
+<h2>相関ヒートマップ（Spearman）</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><img data-src="../outputs/Heatmap.png" style="width:100.0%"></p>
+</div><div class="column" style="width:40%;">
 <ul>
-<li><p>同種・同じ季節の現象は強い正相関</p></li>
-<li><p>春の現象と夏以降の高温は強い負相関</p></li>
-<li><p>秋の現象と夏〜秋の高温は強い正相関</p></li>
-<li><p>生物季節どうしの関係（左上ブロック）</p>
-<ul>
-<li>春の生物季節
+<li>同種・同じ季節の現象は強い正相関</li>
+<li>春の現象と夏以降の高温は強い負相関</li>
+<li>秋の現象と夏〜秋の高温は強い正相関</li>
+</ul>
+</div></div>
+</section>
+<section id="生物季節どうしの関係左上ブロック" class="slide level2">
+<h2>生物季節どうしの関係（左上ブロック）</h2>
+<h3 id="春の生物季節">春の生物季節</h3>
 <ul>
 <li>さくら開花〜さくら満開：0.95、うめ開花〜さくら開花：0.27</li>
 <li>同一種内（開花→満開）は極めて高相関</li>
-<li>異種でも春イベント間は正相関だが、ばらつきはある（うめとさくら）</li>
-</ul></li>
-<li>秋の生物季節
+<li>異種でも春イベント間は正相関だが、ばらつきはある（うめとさくら）.</li>
+</ul>
+<h3 id="秋の生物季節">秋の生物季節</h3>
 <ul>
 <li>いちょう黄葉〜いちょう落葉：0.82、いちょう黄葉〜かえで紅葉：0.78</li>
-<li>秋イベントは 春よりも相関が全体に高め　</li>
-</ul></li>
-<li>春 ↔︎ 秋の生物季節（負相関）
+<li>秋イベントは 春よりも相関が全体に高め.</li>
+</ul>
+<h3 id="春-秋の生物季節負相関">春 ↔︎ 秋の生物季節（負相関）</h3>
 <ul>
 <li>さくら開花 〜 いちょう黄葉：−0.53、すすき開花 〜 いちょう黄葉：−0.74</li>
 <li>春が早い年ほど、秋は遅れる</li>
 <li>季節の引き伸ばし（春の前倒し＋秋の後ろ倒し）を明確に示唆</li>
 <li>「夏が長くなっている感覚」と一致</li>
-</ul></li>
-</ul></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<ul>
-<li>生物季節 × 季節平均気温（右側ブロック）
-<ul>
-<li>春イベント × 気温
+<section id="生物季節-季節平均気温右側ブロック" class="slide level2">
+<h2>生物季節 × 季節平均気温（右側ブロック）</h2>
+<h3 id="春イベント-気温">春イベント × 気温</h3>
 <ul>
 <li>さくら開花 × spring：−0.79、さくら開花 × summer：−0.33</li>
 <li>春が暖かい年ほど DOYが小さい（＝早い）</li>
 <li>特に spring 気温が支配的</li>
-</ul></li>
-<li>秋イベント × 気温
+</ul>
+<h3 id="秋イベント-気温">秋イベント × 気温</h3>
 <ul>
 <li>いちょう黄葉 × autumn：+0.73、いちょう落葉 × autumn：+0.77</li>
 <li>秋が暖かいほど 黄葉・落葉が遅れる</li>
 <li>秋イベントは autumn 気温に最も敏感</li>
-</ul></li>
-</ul></li>
-<li>すすき開花の特徴
+</ul>
+<h3 id="すすき開花の特徴">すすき開花の特徴</h3>
 <ul>
 <li>すすき開花 × summer：−0.58、すすき開花 × autumn：−0.63</li>
 <li>夏〜秋が高温な年ほど すすきは早く咲く</li>
 <li>単純な「秋イベント」ではないことを示唆</li>
-</ul></li>
-<li>季節平均気温どうし（右下）
+</ul>
+</section>
+<section id="季節平均気温どうし右下" class="slide level2">
+<h2>季節平均気温どうし（右下）</h2>
 <ul>
 <li>spring–summer：0.44、summer–autumn：0.58、autumn–winter：0.37</li>
 <li>季節間には連続性はあるが、完全ではない</li>
 <li>各季節を独立変数として扱う妥当性が確認できる</li>
-</ul></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<ul>
-<li>今後の方針
+<section id="今後の方針" class="slide level2">
+<h2>今後の方針</h2>
 <ul>
 <li>Spearman相関なので
 <ul>
@@ -382,7 +317,7 @@ No.3682 岩渕　巧
 <li>長期トレンド（温暖化）を含む可能性がある</li>
 <li>長期トレンド除去後の相関を検討する必要がある</li>
 </ul></li>
-</ul></li>
+<li>かえで や いちょう が「何を感じているのか」を突き止めたい</li>
 </ul>
 
 
