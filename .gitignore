@@ -1,6 +1,7 @@
 # raw data (外付け or 大容量想定)
 data/raw/
-
+data/processed/*_full.rds
+!data/processed/*_small.rds
 # Python
 __pycache__/
 *.pyc

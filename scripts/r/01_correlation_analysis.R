@@ -7,13 +7,14 @@ library(dplyr)
 library(tidyr)
 library(corrplot)
 library(ragg)
+library(glue)
 
 out_dir <- get_out_dir()
 stopifnot(nzchar(out_dir))
-
+stn = "仙台"
 print(data)
 # ---- データ読み込み ----
-df <- read_csv("data/raw/生物季節観測_仙台_DOY_Temp.csv")
+df <- read_csv(glue("data/raw/生物季節観測_{stn}_DOY_Temp.csv"))
 
 months <- paste0(1:12, "月")
 
@@ -52,7 +53,7 @@ df_merged <- df2 %>%
   left_join(df_season_wide, by = "年")
 
 # ---- 中間結果を保存（重要）----
-saveRDS(df_merged, file.path("data", "processed", "df_merged.rds"))
+saveRDS(df_merged, file.path("data", "processed", glue("df_merged_{stn}.rds")))
 
 # ---- 相関解析（Spearman）----
 vars <- c("うめ開花","さくら開花","さくら満開","あじさい開花",
@@ -64,7 +65,7 @@ X <- df_merged[, vars] %>%
   mutate(across(everything(), as.numeric))
 
 cor_raw <- cor(X, use = "pairwise.complete.obs", method = "spearman")
-saveRDS(cor_raw, file.path(out_dir, "cor_raw_spearman.rds"))
+saveRDS(cor_raw, file.path(out_dir, glue("cor_raw_spearman_{stn}.rds")))
 
 # ---- プロット関数 ----
 plot_corr <- function(cor_mat, main) {
@@ -79,7 +80,7 @@ plot_corr <- function(cor_mat, main) {
   mtext(main, side = 3, line = 1)
 }
 
-png(file.path(out_dir, "Heatmap.png"), 800, 800, res = 120)
+png(file.path(out_dir, glue("Heatmap_{stn}.png")), 800, 800, res = 120)
 plot_corr(cor_raw, "Spearman相関")
 dev.off()
 
@@ -100,6 +101,7 @@ cor_resid <- cor(X_resid[vars],
 
 saveRDS(cor_resid, file.path(out_dir, "cor_resid_spearman.rds"))
 
-png(file.path(out_dir, "Heatmap_resid.png"), 800, 800, res = 120)
+png(file.path(out_dir, glue("Heatmap_resid_{stn}.png")), 800, 800, res = 120)
 plot_corr(cor_resid, "Spearman相関（長期トレンド除去後）")
 dev.off()
+

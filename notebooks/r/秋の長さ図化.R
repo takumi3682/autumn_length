@@ -2,8 +2,13 @@ library(readr)
 library(ggplot2)
 library(tidyr)
 library(dplyr)
+library(glue)
 
-df <- read_csv("data/raw/生物季節観測_仙台_DOY_Temp.csv")
+stn = "山形"
+df <- read_csv(
+  file.path("data", "raw",
+            paste0("生物季節観測_", stn, "_DOY_Temp.csv"))
+)
 df
 # 日本語が豆腐になるのを避けたい場合（必要なら）
 library(showtext)
@@ -130,7 +135,7 @@ p4 <- plot_group(df_long, grp4, "かえで",         xlim = c(year_min, year_max
 p_all <- wrap_plots(p1, p2, p3, p4, ncol = 2)
 
 ggsave(
-  filename = "outputs/phenology_timeseries_2x2.png",
+  filename = glue("outputs/phenology_timeseries_2x2_{stn}.png"),
   plot     = p_all,
   width    = 10,     # inch
   height   = 8,      # inch
@@ -143,7 +148,7 @@ ggsave(
 
 p <- ggplot(df_long2, aes(x = 年, y = DOY, color = 項目, shape = 項目)) +
   geom_point(size = 2) +
-  labs(title="生物季節観測 [仙台]") +
+  labs(title= glue("生物季節観測 [{stn}]")) +
   scale_color_manual(values = c(
 #    "すすき開花"   = "green3",
     "いちょう黄葉" = "red",
@@ -194,7 +199,7 @@ labs(x = "年", y = "月") +
 print(p)
 
 # ---- PNG保存（raggを使う）----
-ragg::agg_png("outputs/生物季節観測結果.png", width = 1200, height = 800, res = 144)
+ragg::agg_png(glue("outputs/生物季節観測結果_{stn}.png"), width = 1200, height = 800, res = 144)
 print(p)
 dev.off()
 
@@ -224,3 +229,4 @@ legend("topright",
        pt.bg = c("red", "skyblue"),
        col = c("red", "skyblue"),
        bty = "n")   # 枠線なし（好み）
+

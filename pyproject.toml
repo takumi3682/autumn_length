@@ -1,0 +1,17 @@
+# pyproject.toml
+[project]
+name = "analysis-autumn_length"
+version = "0.0.0"
+
+[tool.ruff]
+select = ["E", "F", "W"]
+
+[tool.ruff.per-file-ignores]
+"*.ipynb" = ["E402", "F401"]
+
+[tool.pylsp]
+plugins.ruff.enabled = true
+plugins.pycodestyle.enabled = false
+plugins.pyflakes.enabled = false
+plugins.pyright.enabled = false
+
