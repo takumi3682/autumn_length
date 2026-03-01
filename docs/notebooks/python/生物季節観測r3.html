@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,7 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../site_libs/bootstrap/bootstrap-ff63373b1067ca6f91cf1456aa1f00a2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -121,45 +121,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <p>生物気象観測 多種データを横持ちで保存</p>
-<div id="cell-1" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> add_project_root(marker<span class="op">=</span><span class="st">"project_paths.py"</span>) <span class="op">-&gt;</span> Path:</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> Path.cwd().resolve()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> d <span class="kw">in</span> [p, <span class="op">*</span>p.parents]:</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (d <span class="op">/</span> marker).exists():</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>            sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(d))</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> d</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(<span class="ss">f"Could not find </span><span class="sc">{</span>marker<span class="sc">}</span><span class="ss"> from cwd=</span><span class="sc">{</span>p<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> add_project_root()</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Project root:"</span>, PROJECT_ROOT)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> project_paths <span class="im">import</span> ROOT <span class="im">as</span> PROJECT, JMA_DATA, OUT, FIG, TAB, REP, CFG</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> project_paths <span class="im">import</span> OUT</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> meteo_lib.core <span class="im">import</span> getBlock, get_HourlyData, get_10minData</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> meteo_lib.paths <span class="im">import</span> JMA_DATA, JMA_GPV_DATA, ERA5_DATA, CACHE_DIR</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data root:"</span>,JMA_DATA)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-1" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> subprocess</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta, date, time</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>JMA_DATA_DIR <span class="op">=</span> Path(<span class="st">'/Users/takumi/Projects/MetData/JMA'</span>)  <span class="co"># JMAデータ格納ディレクトリのパス</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">%load_ext autoreload</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">%autoreload 2</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">import sys</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">from pathlib import Path</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">def add_project_root(marker="project_paths.py") -&gt; Path:</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">    p = Path.cwd().resolve()</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">    for d in [p, *p.parents]:</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">        if (d / marker).exists():</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">            sys.path.insert(0, str(d))</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">            return d</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">    raise FileNotFoundError(f"Could not find {marker} from cwd={p}")</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">PROJECT_ROOT = add_project_root()</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">print("Project root:", PROJECT_ROOT)</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>load_ext autoreload</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>autoreload <span class="dv">2</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> meteo_lib.core_v4 <span class="im">as</span> cv4</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(cv4.<span class="va">__file__</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#print(isinstance(JMA_DATA_DIR, Path))</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"LIB_DATA_DIR     :"</span>, cv4.LIB_DATA_DIR)       <span class="co"># 共通マスタ</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PROJECT_ROOT     :"</span>, cv4.PROJECT_ROOT)       <span class="co"># プロジェクトルート</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"PROJECT_DATA_DIR :"</span>, cv4.PROJECT_DATA_DIR)   <span class="co"># プロジェクト固有 data</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"OUTPUT_DIR       :"</span>, cv4.OUTPUT_DIR)         <span class="co"># 出力</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"JMA_DATA_DIR     :"</span>, JMA_DATA_DIR)           <span class="co"># JMAデータ</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co">from project_paths import ROOT as PROJECT, JMA_DATA, OUT, FIG, TAB, REP, CFG</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="co">from project_paths import OUT</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="co">from meteo_lib.core import getBlock, get_HourlyData, get_10minData</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">from meteo_lib.paths import JMA_DATA, JMA_GPV_DATA, ERA5_DATA, CACHE_DIR</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">print("Data root:",JMA_DATA)</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Project root: /Users/takumi/Projects/meteo-analysis/JMA
-Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
+<pre><code>/Users/takumi/Projects/meteo_lib/meteo_lib/core_v4.py
+LIB_DATA_DIR     : /Users/takumi/Projects/meteo_lib/data
+PROJECT_ROOT     : /Users/takumi/Projects/analysis-autumn_length
+PROJECT_DATA_DIR : /Users/takumi/Projects/analysis-autumn_length/data
+OUTPUT_DIR       : /Users/takumi/Projects/analysis-autumn_length/outputs
+JMA_DATA_DIR     : /Users/takumi/Projects/MetData/JMA</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>'\nfrom project_paths import ROOT as PROJECT, JMA_DATA, OUT, FIG, TAB, REP, CFG\nfrom project_paths import OUT\nfrom meteo_lib.core import getBlock, get_HourlyData, get_10minData\nfrom meteo_lib.paths import JMA_DATA, JMA_GPV_DATA, ERA5_DATA, CACHE_DIR\n\nprint("Data root:",JMA_DATA)\n'</code></pre>
 </div>
 </div>
-<div id="cell-2" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta, date, time</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> calendar</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="cell-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="3">
+<div id="cell-2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:5,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> datetime_value(x, column_value, base_year<span class="op">=</span><span class="dv">2000</span>):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(x):</span>
@@ -180,7 +206,7 @@ Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 月日だけを固定年に乗せる</span></span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Timestamp(base_year, mm, dd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="cell-4" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:4,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="4">
+<div id="cell-3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;executionInfo&quot;,&quot;value&quot;:{&quot;elapsed&quot;:4,&quot;status&quot;:&quot;ok&quot;,&quot;timestamp&quot;:1715778681630,&quot;user&quot;:{&quot;displayName&quot;:&quot;Takumi IWABUTI&quot;,&quot;userId&quot;:&quot;00752888836567679824&quot;},&quot;user_tz&quot;:-540}}" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 生物季節観測のcsvファイルを読み込む</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_data(fn):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    cs1 <span class="op">=</span> [<span class="st">'rm'</span>, <span class="st">'番号'</span>]</span>
@@ -207,93 +233,67 @@ Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df, title_row</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="cell-5" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> JMA_DATA <span class="op">/</span> <span class="st">'raw/生物季節観測'</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>station <span class="op">=</span> <span class="st">"仙台"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>subs <span class="op">=</span> {<span class="st">'うめ開花'</span>:<span class="dv">1</span>, <span class="st">'さくら開花'</span>:<span class="dv">4</span>, <span class="st">'さくら満開'</span>:<span class="dv">5</span>, <span class="st">'あじさい開花'</span>:<span class="dv">9</span>, <span class="st">'すすき開花'</span>:<span class="dv">11</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'いちょう黄葉'</span>:<span class="dv">13</span>, <span class="st">'いちょう落葉'</span>:<span class="dv">14</span>,<span class="st">'かえで紅葉'</span>:<span class="dv">15</span>,<span class="st">'かえで落葉'</span>:<span class="dv">16</span>}</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>series_list <span class="op">=</span> []</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sub_name <span class="kw">in</span> subs.keys():</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    sub_no <span class="op">=</span> <span class="bu">str</span>(subs[sub_name]).zfill(<span class="dv">3</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    fn <span class="op">=</span> fp <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>sub_no<span class="sc">}{</span>sub_name<span class="sc">}</span><span class="ss">.csv"</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    print("file name:", fn)</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    df_part, title_row <span class="op">=</span> read_data(fn)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> df_part[station].copy()   <span class="co"># ← station列だけ取り出す（Series）</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    s.name <span class="op">=</span> sub_name              <span class="co"># ← 列名をsub名にする</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    series_list.append(s)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># 横に連結（列方向）</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat(series_list, axis<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>df_md <span class="op">=</span> df.copy()</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_md)</span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># 2/29はNaN、それ以外は「非うるう年基準」のDOYにする</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_to_doy_A(ts):</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(ts):</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ts.month <span class="op">==</span> <span class="dv">2</span> <span class="kw">and</span> ts.day <span class="op">==</span> <span class="dv">29</span>:</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Timestamp(<span class="dv">2001</span>, ts.month, ts.day).dayofyear</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>df_doy <span class="op">=</span> df_md.<span class="bu">map</span>(md_to_doy_A)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>df_doy_int <span class="op">=</span> df_doy.<span class="bu">round</span>().astype(<span class="st">"Int64"</span>)</span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>out_fn <span class="op">=</span> OUT <span class="op">/</span> <span class="ss">f"生物季節観測_</span><span class="sc">{</span>station<span class="sc">}</span><span class="ss">_DOY.csv"</span></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>df_doy_int.to_csv(out_fn)</span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_doy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cell-4" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fp <span class="op">=</span> JMA_DATA_DIR <span class="op">/</span> <span class="st">'raw/生物季節観測'</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#print(fp)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>station <span class="op">=</span> <span class="st">"山形"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>subs <span class="op">=</span> {<span class="st">'うめ開花'</span>:<span class="dv">1</span>, <span class="st">'さくら開花'</span>:<span class="dv">4</span>, <span class="st">'さくら満開'</span>:<span class="dv">5</span>, <span class="st">'あじさい開花'</span>:<span class="dv">9</span>, <span class="st">'すすき開花'</span>:<span class="dv">11</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'いちょう黄葉'</span>:<span class="dv">13</span>, <span class="st">'いちょう落葉'</span>:<span class="dv">14</span>,<span class="st">'かえで紅葉'</span>:<span class="dv">15</span>,<span class="st">'かえで落葉'</span>:<span class="dv">16</span>}</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>series_list <span class="op">=</span> []</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sub_name <span class="kw">in</span> subs.keys():</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    sub_no <span class="op">=</span> <span class="bu">str</span>(subs[sub_name]).zfill(<span class="dv">3</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    fn <span class="op">=</span> fp <span class="op">/</span> <span class="ss">f"</span><span class="sc">{</span>sub_no<span class="sc">}{</span>sub_name<span class="sc">}</span><span class="ss">.csv"</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#    print("file name:", fn)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    df_part, title_row <span class="op">=</span> read_data(fn)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> df_part[station].copy()   <span class="co"># ← station列だけ取り出す（Series）</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    s.name <span class="op">=</span> sub_name              <span class="co"># ← 列名をsub名にする</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    series_list.append(s)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># 横に連結（列方向）</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat(series_list, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>df_md <span class="op">=</span> df.copy()</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co">#print(df_md)</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># 2/29はNaN、それ以外は「非うるう年基準」のDOYにする</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> md_to_doy_A(ts):</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(ts):</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ts.month <span class="op">==</span> <span class="dv">2</span> <span class="kw">and</span> ts.day <span class="op">==</span> <span class="dv">29</span>:</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.Timestamp(<span class="dv">2001</span>, ts.month, ts.day).dayofyear</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>df_doy <span class="op">=</span> df_md.<span class="bu">map</span>(md_to_doy_A)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>df_doy_int <span class="op">=</span> df_doy.<span class="bu">round</span>().astype(<span class="st">"Int64"</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>out_fn <span class="op">=</span> cv4.OUTPUT_DIR <span class="op">/</span> <span class="ss">f"生物季節観測_</span><span class="sc">{</span>station<span class="sc">}</span><span class="ss">_DOY.csv"</span></span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"out_fn:  "</span>, out_fn)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>df_doy_int.to_csv(out_fn)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_doy)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           うめ開花      さくら開花      さくら満開     あじさい開花      すすき開花     いちょう黄葉  \
-年                                                                        
-1953 2000-03-14 2000-04-11 2000-04-17        NaT        NaT        NaT   
-1954 2000-03-03 2000-04-06 2000-04-12        NaT        NaT        NaT   
-1955 2000-03-10 2000-04-11 2000-04-16        NaT        NaT        NaT   
-1956 2000-03-14 2000-04-16 2000-04-19 2000-06-05        NaT 2000-11-16   
-1957 2000-04-07 2000-04-16 2000-04-21 2000-06-27        NaT 2000-11-06   
-...         ...        ...        ...        ...        ...        ...   
-2020 2000-03-01 2000-03-28 2000-04-03 2000-06-24 2000-07-27 2000-12-01   
-2021 2000-03-10 2000-03-28 2000-03-31 2000-06-21 2000-07-18 2000-11-30   
-2022 2000-03-15 2000-04-08 2000-04-11 2000-06-27 2000-08-22 2000-11-28   
-2023 2000-03-04 2000-03-26 2000-03-31 2000-06-17 2000-08-14 2000-12-05   
-2024 2000-02-19 2000-04-02 2000-04-09 2000-06-16 2000-08-05 2000-11-28   
-
-         いちょう落葉      かえで紅葉      かえで落葉  
-年                                      
-1953        NaT        NaT        NaT  
-1954        NaT        NaT        NaT  
-1955        NaT        NaT        NaT  
-1956        NaT 2000-10-25        NaT  
-1957 2000-11-25 2000-10-28 2000-11-10  
-...         ...        ...        ...  
-2020 2000-12-16 2000-11-23 2000-11-28  
-2021 2000-12-13 2000-11-24 2000-12-01  
-2022 2000-12-09 2000-11-24 2000-11-29  
-2023 2000-12-14 2000-11-24 2000-12-08  
-2024 2000-12-12 2000-11-22 2000-12-05  
-
-[72 rows x 9 columns]
+<pre><code>out_fn:   /Users/takumi/Projects/analysis-autumn_length/outputs/生物季節観測_山形_DOY.csv
       うめ開花  さくら開花  さくら満開  あじさい開花  すすき開花  いちょう黄葉  いちょう落葉  かえで紅葉  かえで落葉
 年                                                                    
-1953  73.0    101    107     NaN    NaN     NaN     NaN    NaN    NaN
-1954  62.0     96    102     NaN    NaN     NaN     NaN    NaN    NaN
-1955  69.0    101    106     NaN    NaN     NaN     NaN    NaN    NaN
-1956  73.0    106    109   156.0    NaN   320.0     NaN  298.0    NaN
-1957  97.0    106    111   178.0    NaN   310.0   329.0  301.0  314.0
+1953    98    109    117   191.0    NaN   303.0   316.0    NaN    NaN
+1954    89    103    108   166.0    NaN   288.0   315.0    NaN    NaN
+1955    96    102    105   161.0    NaN   302.0   313.0    NaN    NaN
+1956    89    108    111   171.0    NaN   308.0   319.0    NaN    NaN
+1957   105    110    117   183.0  227.0   305.0   312.0  310.0  318.0
 ...    ...    ...    ...     ...    ...     ...     ...    ...    ...
-2020  60.0     87     93   175.0  208.0   335.0   350.0  327.0  332.0
-2021  69.0     87     90   172.0  199.0   334.0   347.0  328.0  335.0
-2022  74.0     98    101   178.0  234.0   332.0   343.0  328.0  333.0
-2023  63.0     85     90   168.0  226.0   339.0   348.0  328.0  342.0
-2024  50.0     92     99   167.0  217.0   332.0   346.0  326.0  339.0
+2020    78     93     99     NaN  222.0   322.0   326.0  329.0  342.0
+2021    86     92     95   179.0  216.0   315.0   327.0  328.0  347.0
+2022    95    101    103   179.0  234.0   315.0   326.0  329.0  339.0
+2023    79     90     95   177.0  222.0   324.0   334.0  340.0  348.0
+2024    81     97    100   171.0  213.0   322.0   331.0  338.0  347.0
 
 [72 rows x 9 columns]</code></pre>
 </div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="8">
+<div id="cell-5" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> lxml</span>
@@ -316,26 +316,26 @@ Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.merge(df_doy2, df_temp, left_index<span class="op">=</span><span class="va">True</span>, right_index<span class="op">=</span><span class="va">True</span>, how<span class="op">=</span><span class="st">"inner"</span>)</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>out_fn_df <span class="op">=</span> OUT <span class="op">/</span> <span class="ss">f"生物季節観測_</span><span class="sc">{</span>station<span class="sc">}</span><span class="ss">_DOY_Temp.csv"</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>out_fn_df <span class="op">=</span> cv4.OUTPUT_DIR <span class="op">/</span> <span class="ss">f"生物季節観測_</span><span class="sc">{</span>station<span class="sc">}</span><span class="ss">_DOY_Temp.csv"</span></span>
 <span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>df.to_csv(out_fn_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>0 Index(['年', '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月',
        '12月', '年の値'],
       dtype='object')
 1 Index([0, 1, 2, 3], dtype='int64')
-         1月   2月   3月    4月    5月    6月    7月    8月    9月   10月   11月  12月  \
+       1月     2月   3月    4月    5月    6月    7月    8月    9月   10月   11月  12月  \
 年                                                                            
-1926    NaN  NaN  NaN   NaN   NaN   NaN   NaN   NaN   NaN  11.8   6.8  1.7   
-1927   -0.6 -1.5  2.5   9.0  13.6  17.6  23.4  24.2  18.5  13.9   8.3  2.1   
-1928    0.4  0.1  2.9   8.8  13.7  16.9  21.1  22.4  21.6  14.2   8.8  1.4   
-1929   -1.3 -0.7  2.9   8.7  12.9  16.7  23.3  24.9  18.7  14.3   8.2  5.0   
-1930   -0.6  1.9  5.6   9.9  14.4  18.4  22.4  24.5  19.2  13.9   6.8  2.3   
-...     ...  ...  ...   ...   ...   ...   ...   ...   ...   ...   ...  ...   
-2022    1.7  1.9  6.4  11.8  16.5  20.2  24.9  25.1  22.2  15.5  11.9  4.2   
-2023    2.1  3.0  9.3  13.3  16.6  21.6  26.6  28.6  25.1  16.7  11.4  5.7   
-2024    4.2  4.7  6.0  14.8  17.8  21.5  26.1  27.4  23.5  18.0  10.9  4.3   
-2025    3.2  2.7  7.6  12.0  16.2  22.8  27.2  27.5  23.8  16.2  10.5  5.7   
-2026  2.3 ]  NaN  NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  NaN   
+1926  NaN    NaN  NaN   NaN   NaN   NaN   NaN   NaN   NaN  11.8   6.8  1.7   
+1927 -0.6   -1.5  2.5   9.0  13.6  17.6  23.4  24.2  18.5  13.9   8.3  2.1   
+1928  0.4    0.1  2.9   8.8  13.7  16.9  21.1  22.4  21.6  14.2   8.8  1.4   
+1929 -1.3   -0.7  2.9   8.7  12.9  16.7  23.3  24.9  18.7  14.3   8.2  5.0   
+1930 -0.6    1.9  5.6   9.9  14.4  18.4  22.4  24.5  19.2  13.9   6.8  2.3   
+...   ...    ...  ...   ...   ...   ...   ...   ...   ...   ...   ...  ...   
+2022  1.7    1.9  6.4  11.8  16.5  20.2  24.9  25.1  22.2  15.5  11.9  4.2   
+2023  2.1    3.0  9.3  13.3  16.6  21.6  26.6  28.6  25.1  16.7  11.4  5.7   
+2024  4.2    4.7  6.0  14.8  17.8  21.5  26.1  27.4  23.5  18.0  10.9  4.3   
+2025  3.2    2.7  7.6  12.0  16.2  22.8  27.2  27.5  23.8  16.2  10.5  5.7   
+2026  1.8  3.8 ]  NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN   NaN  NaN   
 
         年の値  
 年            
@@ -349,37 +349,37 @@ Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
 2023   15.0  
 2024   14.9  
 2025   14.6  
-2026      ×  
+2026  1.8 ]  
 
 [101 rows x 13 columns]
       うめ開花  さくら開花  さくら満開  あじさい開花  すすき開花  いちょう黄葉  いちょう落葉  かえで紅葉  かえで落葉
 年                                                                    
-1953  73.0    101    107     NaN    NaN     NaN     NaN    NaN    NaN
-1954  62.0     96    102     NaN    NaN     NaN     NaN    NaN    NaN
-1955  69.0    101    106     NaN    NaN     NaN     NaN    NaN    NaN
-1956  73.0    106    109   156.0    NaN   320.0     NaN  298.0    NaN
-1957  97.0    106    111   178.0    NaN   310.0   329.0  301.0  314.0
+1953    98    109    117   191.0    NaN   303.0   316.0    NaN    NaN
+1954    89    103    108   166.0    NaN   288.0   315.0    NaN    NaN
+1955    96    102    105   161.0    NaN   302.0   313.0    NaN    NaN
+1956    89    108    111   171.0    NaN   308.0   319.0    NaN    NaN
+1957   105    110    117   183.0  227.0   305.0   312.0  310.0  318.0
 ...    ...    ...    ...     ...    ...     ...     ...    ...    ...
-2020  60.0     87     93   175.0  208.0   335.0   350.0  327.0  332.0
-2021  69.0     87     90   172.0  199.0   334.0   347.0  328.0  335.0
-2022  74.0     98    101   178.0  234.0   332.0   343.0  328.0  333.0
-2023  63.0     85     90   168.0  226.0   339.0   348.0  328.0  342.0
-2024  50.0     92     99   167.0  217.0   332.0   346.0  326.0  339.0
+2020    78     93     99     NaN  222.0   322.0   326.0  329.0  342.0
+2021    86     92     95   179.0  216.0   315.0   327.0  328.0  347.0
+2022    95    101    103   179.0  234.0   315.0   326.0  329.0  339.0
+2023    79     90     95   177.0  222.0   324.0   334.0  340.0  348.0
+2024    81     97    100   171.0  213.0   322.0   331.0  338.0  347.0
 
 [72 rows x 9 columns]
       うめ開花  さくら開花  さくら満開  あじさい開花  すすき開花  いちょう黄葉  いちょう落葉  かえで紅葉  かえで落葉   1月  \
 年                                                                            
-1953  73.0    101    107     NaN    NaN     NaN     NaN    NaN    NaN  0.3   
-1954  62.0     96    102     NaN    NaN     NaN     NaN    NaN    NaN  0.8   
-1955  69.0    101    106     NaN    NaN     NaN     NaN    NaN    NaN  0.6   
-1956  73.0    106    109   156.0    NaN   320.0     NaN  298.0    NaN  0.7   
-1957  97.0    106    111   178.0    NaN   310.0   329.0  301.0  314.0  1.7   
+1953    98    109    117   191.0    NaN   303.0   316.0    NaN    NaN  0.3   
+1954    89    103    108   166.0    NaN   288.0   315.0    NaN    NaN  0.8   
+1955    96    102    105   161.0    NaN   302.0   313.0    NaN    NaN  0.6   
+1956    89    108    111   171.0    NaN   308.0   319.0    NaN    NaN  0.7   
+1957   105    110    117   183.0  227.0   305.0   312.0  310.0  318.0  1.7   
 ...    ...    ...    ...     ...    ...     ...     ...    ...    ...  ...   
-2020  60.0     87     93   175.0  208.0   335.0   350.0  327.0  332.0  4.0   
-2021  69.0     87     90   172.0  199.0   334.0   347.0  328.0  335.0  1.2   
-2022  74.0     98    101   178.0  234.0   332.0   343.0  328.0  333.0  1.7   
-2023  63.0     85     90   168.0  226.0   339.0   348.0  328.0  342.0  2.1   
-2024  50.0     92     99   167.0  217.0   332.0   346.0  326.0  339.0  4.2   
+2020    78     93     99     NaN  222.0   322.0   326.0  329.0  342.0  4.0   
+2021    86     92     95   179.0  216.0   315.0   327.0  328.0  347.0  1.2   
+2022    95    101    103   179.0  234.0   315.0   326.0  329.0  339.0  1.7   
+2023    79     90     95   177.0  222.0   324.0   334.0  340.0  348.0  2.1   
+2024    81     97    100   171.0  213.0   322.0   331.0  338.0  347.0  4.2   
 
       ...    4月    5月    6月    7月    8月    9月   10月   11月  12月   年の値  
 年     ...                                                             
@@ -398,10 +398,15 @@ Data root: /Users/takumi/Projects/MetData/JMA</code></pre>
 [72 rows x 22 columns]</code></pre>
 </div>
 </div>
-<div id="cell-7" class="cell">
+<div id="cell-6" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_temp.index.dtype, df_doy.index.dtype)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_temp.index[:<span class="dv">5</span>])</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df_doy.index[:<span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>int64 object
+Index([1926, 1927, 1928, 1929, 1930], dtype='int64', name='年')
+Index(['1953', '1954', '1955', '1956', '1957'], dtype='object', name='年')</code></pre>
+</div>
 </div>
 
 

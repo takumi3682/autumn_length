@@ -11,7 +11,7 @@
 
   <meta name="author" content="No.3682 岩渕　巧">
   <meta name="dcterms.date" content="2026-03-14">
-  <title>生物季節観測データの相互相関解析〜長期トレンド除去</title>
+  <title>長期トレンドを除いた生物季節観測データの相互相関解析</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -123,13 +123,15 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+  <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">生物季節観測データの相互相関解析〜長期トレンド除去</h1>
+  <h1 class="title">長期トレンドを除いた生物季節観測データの相互相関解析</h1>
   <p class="subtitle">日本気象予報士会 東北支部　2026年3月例会</p>
 
 <div class="quarto-title-authors">
@@ -142,76 +144,646 @@ No.3682 岩渕　巧
 
   <p class="date">2026-03-14</p>
 </section>
-<section class="slide level2">
+<section id="長期トレンドの除去" class="title-slide slide level1 center">
+<h1>長期トレンドの除去</h1>
+<p>2月例会話題提供では、「仙台」のデータを使って、さくら開花などの生物季節観測同士、あるいは気温との相関関係を算出した。<br>
+生物季節観測データ、気温には地球温暖化による長期トレンドが影響を及ぼしていると考えられることから、この長期トレンドを除去した相関関係を算出し、再検討してみることとした。</p>
+<!--
+まずは基本データ（仙台の生物季節観測データと、月毎の平均気温）は以下の通り。
 
-<p>```{r}</p>
-<p>df &lt;- readRDS(“/Users/takumi/Projects/analysis-autumn_length/data/processed/df2.rds”)</p>
-<p>df.head()</p>
-<p>```</p>
+::: {.cell}
+
+:::
+
+
+
+::: {.cell}
+::: {.cell-output-display}
+`````{=html}
+
+<table class="table caption-top" data-quarto-postprocess="true" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">年|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">うめ開花| さくら</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">花| さくら満開| あ</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">さい開花| すすき開花</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">いちょう黄葉| いちょう</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">葉| かえで紅葉| か</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">で落葉| 1月| 2月|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">月 | 4月| 5月|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">6月| 7月|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">月| 9月| 10月</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">11月|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">12月|</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">年の値|</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: right;" data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1953</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.3</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: left;">5.5</td>
+<td style="text-align: right;">9.0</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">17.1</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">22.4</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">6.8</td>
+<td style="text-align: right;">4.2</td>
+<td style="text-align: right;">11.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1954</td>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">3.0</td>
+<td style="text-align: left;">4.1</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">19.4</td>
+<td style="text-align: right;">24.5</td>
+<td style="text-align: right;">21.6</td>
+<td style="text-align: right;">13.3</td>
+<td style="text-align: right;">8.5</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: right;">11.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1955</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">2.1</td>
+<td style="text-align: left;">4.6</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">14.3</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">24.6</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">14.8</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">4.8</td>
+<td style="text-align: right;">12.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1956</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">298</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: left;">4.3</td>
+<td style="text-align: right;">9.4</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">18.6</td>
+<td style="text-align: right;">20.6</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">19.9</td>
+<td style="text-align: right;">14.9</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">1.4</td>
+<td style="text-align: right;">11.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1957</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">310</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">301</td>
+<td style="text-align: right;">314</td>
+<td style="text-align: right;">1.7</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: left;">2.8</td>
+<td style="text-align: right;">10.3</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">21.4</td>
+<td style="text-align: right;">24.4</td>
+<td style="text-align: right;">18.8</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">4.6</td>
+<td style="text-align: right;">11.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1958</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">329</td>
+<td style="text-align: right;">305</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1.1</td>
+<td style="text-align: right;">2.3</td>
+<td style="text-align: left;">4.2</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">14.4</td>
+<td style="text-align: right;">19.0</td>
+<td style="text-align: right;">22.0</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">19.7</td>
+<td style="text-align: right;">13.4</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">11.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1959</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">168</td>
+<td style="text-align: right;">253</td>
+<td style="text-align: right;">304</td>
+<td style="text-align: right;">339</td>
+<td style="text-align: right;">324</td>
+<td style="text-align: right;">339</td>
+<td style="text-align: right;">0.7</td>
+<td style="text-align: right;">3.6</td>
+<td style="text-align: left;">5.8</td>
+<td style="text-align: right;">11.4</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">18.0</td>
+<td style="text-align: right;">22.6</td>
+<td style="text-align: right;">23.2</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">15.1</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">12.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1960</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">178</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: right;">305</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">330</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">2.8</td>
+<td style="text-align: left;">5.0</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">14.7</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">22.8</td>
+<td style="text-align: right;">24.7</td>
+<td style="text-align: right;">20.8</td>
+<td style="text-align: right;">14.1</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">3.4</td>
+<td style="text-align: right;">12.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1961</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">240</td>
+<td style="text-align: right;">307</td>
+<td style="text-align: right;">334</td>
+<td style="text-align: right;">306</td>
+<td style="text-align: right;">328</td>
+<td style="text-align: right;">-0.3</td>
+<td style="text-align: right;">0.9</td>
+<td style="text-align: left;">4.3</td>
+<td style="text-align: right;">11.2</td>
+<td style="text-align: right;">16.5</td>
+<td style="text-align: right;">19.3</td>
+<td style="text-align: right;">24.4</td>
+<td style="text-align: right;">24.0</td>
+<td style="text-align: right;">22.3</td>
+<td style="text-align: right;">15.2</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">3.7</td>
+<td style="text-align: right;">12.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">246</td>
+<td style="text-align: right;">309</td>
+<td style="text-align: right;">333</td>
+<td style="text-align: right;">299</td>
+<td style="text-align: right;">326</td>
+<td style="text-align: right;">1.6</td>
+<td style="text-align: right;">1.8</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: right;">10.4</td>
+<td style="text-align: right;">15.4</td>
+<td style="text-align: right;">18.3</td>
+<td style="text-align: right;">22.2</td>
+<td style="text-align: right;">25.2</td>
+<td style="text-align: right;">20.9</td>
+<td style="text-align: right;">13.6</td>
+<td style="text-align: right;">8.6</td>
+<td style="text-align: right;">4.3</td>
+<td style="text-align: right;">12.2</td>
+</tr>
+</tbody>
+</table>
+
+
+`````
+:::
+:::
+
+-->
 </section>
-<section id="基本相関" class="title-slide slide level1 center">
-<h1>基本相関</h1>
-<p>cor(df2<span class="math inline">\(さくら開花, df2\)</span>春, method=“spearman”, use=“complete.obs”)</p>
+
+<section id="長期トレンド除去の方法" class="title-slide slide level1 center">
+<h1>長期トレンド除去の方法</h1>
+<p>長期トレンドの除去方法として、以下の3つを検討した。</p>
+<ol type="1">
+<li><p>線形トレンドの除去<br>
+各系列に対して　<span class="math inline">\(Y_i = a + b t + \epsilon_t\)</span>　の線形回帰を行い、残差を用いて相関を算出する</p></li>
+<li><p>Sen’s slopeの除去. 外れ値に強いロバストな線形回帰であるSen’s slopeを用いて、各系列のトレンドを除去し、残差を用いて相関を算出する</p></li>
+<li><p>多変量回帰. 相関ではなく　<span class="math inline">\(sakura = \beta_0 + \beta_1 temp_{spring} + \beta_2 year + \epsilon\)</span>　のような多変量回帰を行い、年の影響をコントロールした上で、春の気温の影響を評価する</p></li>
+</ol>
 </section>
 
-<section id="線形トレンド除去後の相関" class="title-slide slide level1 center">
-<h1>線形トレンド除去後の相関</h1>
-<p>res_doy &lt;- resid(lm(さくら開花 ~ 年, data=df2)) res_spr &lt;- resid(lm(春 ~ 年, data=df2))</p>
-<p>cor(res_doy, res_spr, method=“spearman”, use=“complete.obs”)</p>
-</section>
-
-<section id="sens-slope除去後の相関ロバスト" class="title-slide slide level1 center">
-<h1>Sen’s slope除去後の相関（ロバスト）</h1>
-<p>library(mblm)</p>
-<p>fit1 &lt;- mblm(さくら開花 ~ 年, data=df2) fit2 &lt;- mblm(春 ~ 年, data=df2)</p>
-<p>res1 &lt;- df2<span class="math inline">\(さくら開花 - predict(fit1)
-res2 &lt;- df2\)</span>春 - predict(fit2)</p>
-<p>cor(res1, res2, method=“spearman”, use=“complete.obs”)</p>
-</section>
-
-<section id="多変量回帰" class="title-slide slide level1 center">
-<h1>多変量回帰</h1>
-<p>summary(lm(さくら開花 ~ 春 + 年, data=df2))</p>
-</section>
-
-<section id="共線性確認" class="title-slide slide level1 center">
-<h1>共線性確認</h1>
-<p>library(car) vif(lm(さくら開花 ~ 春 + 年))</p>
-</section>
-
-<section id="残差の自己相関" class="title-slide slide level1 center">
-<h1>残差の自己相関</h1>
-<p>acf(resid(fit))</p>
-</section>
-
-<section id="夏の気温と冬の気温の相関を調べたい" class="title-slide slide level1 center">
-<h1>夏の気温と冬の気温の相関を調べたい。</h1>
+<section>
+<section id="さくら開花と春の気温について" class="title-slide slide level1 center">
+<h1>さくら開花と春の気温について</h1>
 
 </section>
-
-<section id="基本相関-1" class="title-slide slide level1 center">
-<h1>基本相関</h1>
-<p>cor(df2<span class="math inline">\(夏, df2\)</span>冬, method=“spearman”, use=“complete.obs”)</p>
+<section id="相関係数" class="slide level2">
+<h2>相関係数</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">さくら開花と春の気温の相関</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">基本相関</td>
+<td style="text-align: right;">-0.794</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">線形トレンド除去後の相関</td>
+<td style="text-align: right;">-0.762</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sen’s slope除去後の相関</td>
+<td style="text-align: right;">-0.741</td>
+</tr>
+</tbody>
+</table>
+<p>基本相関は-0.794で、さくらの開花と春の気温には強い負の相関があることを示している。<br>
+線形トレンド除去後の相関は-0.762、Sen’s slope除去後の相関は-0.741で、いずれも基本相関と比較してやや弱くなっているが、依然として強い負の相関が存在することを示している。</p>
+<p>したがって、<strong>さくらの開花は春気温の変動に強く反応している</strong> という結論が得られる。</p>
 </section>
+<section id="多変量回帰" class="slide level2">
+<h2>多変量回帰</h2>
+<p>多変量回帰による結果は以下の通り。</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">143.556</td>
+<td style="text-align: right;">42.063</td>
+<td style="text-align: right;">3.413</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">春</td>
+<td style="text-align: right;">-4.962</td>
+<td style="text-align: right;">0.445</td>
+<td style="text-align: right;">-11.153</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">年</td>
+<td style="text-align: right;">0.004</td>
+<td style="text-align: right;">0.022</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: right;">0.869</td>
+</tr>
+</tbody>
+</table>
+<p>春の係数-4.962は、春の気温が1度上昇すると、さくらの開花が約5日早まることを示す。p=0.001 は非常に有意な結果。<br>
+年の係数0.004は、さくらの開花が年々約0.004日遅くなっていることを示すが、p=0.869 で有意ではない。</p>
+<p>したがって、<strong>さくらの開花には春気温が強く影響しており、年の影響はほとんどない</strong> という結論が得られる。</p>
+</section></section>
+<section>
+<section id="すすき開花と夏の気温について" class="title-slide slide level1 center">
+<h1>すすき開花と夏の気温について</h1>
 
-<section id="線形トレンド除去後の相関-1" class="title-slide slide level1 center">
-<h1>線形トレンド除去後の相関</h1>
-<p>res_sum &lt;- resid(lm(夏 ~ 年, data=df2)) res_win &lt;- resid(lm(冬 ~ 年, data=df2))</p>
-<p>cor(res_sum, res_win, method=“spearman”, use=“complete.obs”)</p>
 </section>
-
-<section id="sens-slope除去後の相関ロバスト-1" class="title-slide slide level1 center">
-<h1>Sen’s slope除去後の相関（ロバスト）</h1>
-<p>library(mblm)</p>
-<p>fit1 &lt;- mblm(夏 ~ 年, data=df2) fit2 &lt;- mblm(冬 ~ 年, data=df2)</p>
-<p>res1 &lt;- df2<span class="math inline">\(夏 - predict(fit1)
-res2 &lt;- df2\)</span>冬 - predict(fit2)</p>
-<p>cor(res1, res2, method=“spearman”, use=“complete.obs”)</p>
+<section id="相関係数-1" class="slide level2">
+<h2>相関係数</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">すすき開花と夏の気温の相関</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">基本相関</td>
+<td style="text-align: right;">-0.339</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">線形トレンド除去後の相関</td>
+<td style="text-align: right;">0.121</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sen’s slope除去後の相関</td>
+<td style="text-align: right;">0.101</td>
+</tr>
+</tbody>
+</table>
+<p>基本相関は-0.339で、すすきの開花と夏の気温には弱い負の相関があることを示している。<br>
+線形トレンド除去後の相関は0.121、Sen’s slope除去後の相関は0.101で、いずれも基本相関と正負が逆転して いる上に相関が弱くなっている。</p>
+<p>したがって、<strong>すすきの開花に対する夏の気温の影響はほとんど無い</strong> という結論が得られる。</p>
+<p>これを図化すると次ページの通り。</p>
 </section>
+<section id="すすき開花と夏の気温について長期トレンド除去後仙台" class="slide level2">
+<h2>すすき開花と夏の気温について（長期トレンド除去後、仙台）</h2>
 
-<section id="多変量回帰-1" class="title-slide slide level1 center">
-<h1>多変量回帰</h1>
-<p>summary(lm(夏 ~ 冬 + 年, data=df2))</p>
+<img data-src="../outputs/長期トレンド除去後の相関_仙台.png" style="width:95.0%" class="r-stretch"></section>
+<section id="多変量回帰-1" class="slide level2">
+<h2>多変量回帰</h2>
+<p>多変量回帰による結果は以下の通り。</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">1436.457</td>
+<td style="text-align: right;">117.941</td>
+<td style="text-align: right;">12.179</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">夏</td>
+<td style="text-align: right;">1.442</td>
+<td style="text-align: right;">1.047</td>
+<td style="text-align: right;">1.377</td>
+<td style="text-align: right;">0.173</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">年</td>
+<td style="text-align: right;">-0.623</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">-9.714</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+<p>夏の係数1.442は、夏の気温が1度上昇すると、すすきの開花が約1.442日遅れることを示すが、p=0.173 は有意ではない。<br>
+年の係数-0.623は、すすきの開花が年々約0.623日遅くなっていることを示しており、p=0.000 で非常に有意である。</p>
+<p>したがって、<strong>すすきの開花には夏気温の影響はなく、長期トレンド（温暖化）の影響が大きい</strong> という結論が得られる。</p>
+</section></section>
+<section>
+<section id="すすき開花と夏の気温について山形のケース" class="title-slide slide level1 center">
+<h1>すすき開花と夏の気温について（山形のケース）</h1>
+<p>仙台のすすき開花と年の相関は−0.623と比較的強い負の相関で、長期トレンド（温暖化）の影響が考えられる。 そこで、仙台に近い場所で、仙台より都市化が進んでおらず、日本の気象の代表13地点にも入っている山形のケースを検証してみる。</p>
+</section>
+<section id="相関係数-2" class="slide level2">
+<h2>相関係数</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">すすき開花と夏の気温の相関</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">基本相関</td>
+<td style="text-align: right;">0.052</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">線形トレンド除去後の相関</td>
+<td style="text-align: right;">0.048</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sen’s slope除去後の相関</td>
+<td style="text-align: right;">0.050</td>
+</tr>
+</tbody>
+</table>
+<p>基本相関は0.052と非常に小さく、<strong>山形に於いては、すすきの開花と夏の気温にはほぼ無関係である</strong>ことが示された。</p>
+</section>
+<section id="多変量回帰-2" class="slide level2">
+<h2>多変量回帰</h2>
+<p>多変量回帰による結果は以下の通り。</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">373.907</td>
+<td style="text-align: right;">93.170</td>
+<td style="text-align: right;">4.013</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">夏</td>
+<td style="text-align: right;">0.473</td>
+<td style="text-align: right;">0.864</td>
+<td style="text-align: right;">0.547</td>
+<td style="text-align: right;">0.586</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">年</td>
+<td style="text-align: right;">-0.079</td>
+<td style="text-align: right;">0.051</td>
+<td style="text-align: right;">-1.555</td>
+<td style="text-align: right;">0.125</td>
+</tr>
+</tbody>
+</table>
+<p>夏の係数0.473は、夏の気温が1度上昇すると、すすきの開花が約0.473日遅れることを示すが、p=0.586 は有意ではない。<br>
+年の係数-0.079は、すすきの開花が年々約0.079日遅くなっていることを示しているが、p=0.125 で有意ではない。</p>
+<p>したがって、<strong>山形に於いては、すすきの開花には夏気温も長期トレンド（温暖化）の影響も無い</strong> という結論が得られる。</p>
+</section>
+<section id="すすき開花に関する考察" class="slide level2">
+<h2>すすき開花に関する考察</h2>
+<p>仙台のケースと考え合わせると、<strong>すすきの開花には夏の気温の影響はなく、仙台に於いて長期トレンド（温暖化）の影響が大きいのは、仙台の都市化が進んでいる影響</strong>といえるかもしれない 。</p>
+<p>ここで、すすき開花の経年変化を仙台と山形で比較すると次のとおりである。</p>
+</section>
+<section id="すすき開花の経年変化仙台と山形の比較" class="slide level2">
+<h2>すすき開花の経年変化（仙台と山形の比較）</h2>
+
+<img data-src="../outputs/すすき開花比較.png" style="width:95.0%" class="r-stretch"><p>仙台と山形で、すすき開花の経年変化傾向は大きく異なっていることが分かる。</p>
+</section></section>
+<section>
+<section id="夏の気温と冬の気温について" class="title-slide slide level1 center">
+<h1>夏の気温と冬の気温について</h1>
+
+</section>
+<section id="相関係数-3" class="slide level2">
+<h2>相関係数</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">方法</th>
+<th style="text-align: right;">夏の気温と冬の気温の相関</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">基本相関</td>
+<td style="text-align: right;">0.302</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">線形トレンド除去後の相関</td>
+<td style="text-align: right;">0.146</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sen’s slope除去後の相関</td>
+<td style="text-align: right;">0.135</td>
+</tr>
+</tbody>
+</table>
+<p>基本相関は0.302で、夏の気温と冬の気温には弱い正の相関があることを示している。線形トレンド除去後の相関は0.146、Sen’s slope除去後の相関は0.135で、いずれも基本相関と比較して半減しており、基本相関の弱い相関は長期トレンドの影響によるものと考えられる。</p>
+<p>したがって、<strong>長期トレンド（温暖化）除去を除去すると、夏と冬の気温はほぼ独立</strong> という結論が得られる。</p>
+</section>
+<section id="多変量回帰-3" class="slide level2">
+<h2>多変量回帰</h2>
+<p>多変量回帰による結果は以下の通り。</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-30.581</td>
+<td style="text-align: right;">13.317</td>
+<td style="text-align: right;">-2.296</td>
+<td style="text-align: right;">0.025</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">冬</td>
+<td style="text-align: right;">0.139</td>
+<td style="text-align: right;">0.156</td>
+<td style="text-align: right;">0.890</td>
+<td style="text-align: right;">0.376</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">年</td>
+<td style="text-align: right;">0.026</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">3.858</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+<p>冬の係数0.139は、冬の気温が1度上昇すると、夏の気温が約0.139度上昇することを示すが、p=0.376 は有意ではない。<br>
+年の係数0.026は、夏の気温が年々約0.026度上昇していることを示しており、p=0.000 で非常に有意である。これは温暖化のトレンドと考えられる。</p>
+<p>したがって、<strong>夏の気温には冬の気温の影響はなく、長期トレンド（温暖化）の影響が大きい</strong> という結論が得られる。</p>
+</section></section>
+<section id="まとめと次への課題" class="title-slide slide level1 center">
+<h1>まとめと次への課題</h1>
+<p>長期トレンドを除去して検定を行った結果は以下の通り。</p>
+<ul>
+<li>さくら開花は春気温の変動に強く反応しており、経年変化の影響は小さい</li>
+<li>すすき開花に対する夏の気温の影響はほとんど無い</li>
+<li>すすき開花に対し、仙台のデータは長期トレンド（温暖化）の影響が大きいと見られるのに対し、山形のデータは長期トレンドの影響はほとんど見られない</li>
+<li>夏の気温に対して冬の気温の影響は無く、長期トレンドの影響が大きい</li>
+</ul>
+<p>次の課題は以下の通りと考えている。</p>
+<ul>
+<li>夏の気温と冬の気温について、エルニーニョ／ラニーニャの発生時期に限定して解析してみる</li>
+<li>「二季化」の提唱者である、三重大学 立花教授の論文を読み解いてみる</li>
+</ul>
 
 
 </section>
@@ -430,6 +1002,44 @@ res2 &lt;- df2\)</span>冬 - predict(fit2)</p>
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
         const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
