@@ -3,4 +3,5 @@ project:
     output-dir: docs
     resources:
       - outputs/**
+      - keynote/**
       
