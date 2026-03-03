@@ -27,26 +27,31 @@ params:
 2月例会話題提供では、「仙台」のデータを使って、さくら開花などの生物季節観測同士、あるいは気温との相関関係を算出した。  
 生物季節観測データ、気温には地球温暖化による長期トレンドが影響を及ぼしていると考えられることから、この長期トレンドを除去した相関関係を算出し、再検討してみることとした。  
 
-<!--
-まずは基本データ（仙台の生物季節観測データと、月毎の平均気温）は以下の通り。
-```{r}
-df <- readRDS("/Users/takumi/Projects/analysis-autumn_length/data/processed/df2_仙台.rds")
-```
 
+まずは基本データ（仙台の生物季節観測データと、月毎の平均気温）の
+抜粋は以下の通り。
 ```{r}
 library(readr)
 library(dplyr)
+library(here)
 library(knitr)
 library(kableExtra)
 
-df <- read_csv("../data/raw/生物季節観測_仙台_DOY_Temp.csv")
+src <- here("data", "processed", "df2_仙台.rds")
+df <- readRDS(src)
 
-df %>%
-  slice_head(n = 10) %>%
-  kable() %>%
-  kable_styling(font_size = 18, full_width = FALSE)
+df_show <- df |>
+  mutate(across(春:冬, ~ round(.x, 1))) |>
+  select(年, さくら開花, すすき開花, いちょう黄葉, 春:冬) |>
+  head(5)
+
+knitr::kable(
+  df_show,
+  booktabs = TRUE,
+  align = c("c","r","r","r","r","r","r","r"),
+  table.attr = 'style="font-size:14px; width:100%; table-layout:fixed;"'
+)
 ```
--->
 
 # 長期トレンド除去の方法
 長期トレンドの除去方法として、以下の3つを行った。
