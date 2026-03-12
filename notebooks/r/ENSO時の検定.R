@@ -1,7 +1,9 @@
-library(dplyr)
-library(readr)
-library(stringr)
+#library(dplyr)
+#library(readr)
+#library(stringr)
+library(tidyverse)
 library(here)
+library(glue)
 stn <- "仙台"
 
 DATA_DIR <- here("data", "processed")
@@ -12,10 +14,8 @@ print(DATA_DIR)
 # 1 CSV読み込み
 # =========================
 
-df <- read_csv(
-  file.path("data", "raw",
-            paste0("生物季節観測_", stn, "_DOY_Temp.csv"))
-)
+df <- read_csv(here("data", "raw", glue("生物季節観測_{stn}_DOY_Temp.csv")))
+
 # =========================
 # 2 ENSO期間（気象庁公式）
 # =========================
@@ -64,41 +64,26 @@ get_enso <- function(year, season){
 }
 
 # =========================
-# 4 ENSO列作成
+# 4 ENSO列作成・元データに追加
 # =========================
 
 enso_tbl <- tibble(
   年 = unique(df$年)
 ) %>%
+  arrange(年) %>%
   mutate(
-    ENSO_summer = sapply(年, get_enso, season="summer"),
-    ENSO_winter = sapply(年, get_enso, season="winter"),
+    ENSO_summer = map_chr(年, get_enso, season="summer"),
+    ENSO_winter = map_chr(年, get_enso, season="winter"),
     ENSO_next_winter = lead(ENSO_winter),
   )
-
-# =========================
-# 5 元データに追加
-# =========================
-
-df2 <- df %>%
-  left_join(enso_tbl, by="年") %>%
-  relocate(ENSO_summer, ENSO_winter, ENSO_next_winter, .after=年)
-
-df2 <- df2 %>%
-  arrange(年) %>%
-  mutate(
-    ENSO_next_winter = lead(ENSO_winter)
-  )
-
-df2 <- df2 %>%
-  mutate(
-    across(matches("月$"),
-           ~as.numeric(str_extract(.x, "[0-9.]+")))
-  )
-
-
-df2 <- df2 %>%
-  arrange(年) %>%
+  df2 <- df %>%
+    left_join(enso_tbl, by="年") %>%
+    relocate(ENSO_summer, ENSO_winter, ENSO_next_winter, .after=年) %>%
+    mutate(
+      across(matches("月$"),
+           ~as.numeric(str_extract(as.character(.x), "[0-9.]+"))
+      )
+  ) %>%
   mutate(
     春平均気温 = rowMeans(across(c(`3月`,`4月`,`5月`)), na.rm=TRUE),
     夏平均気温 = rowMeans(across(c(`6月`,`7月`,`8月`)), na.rm=TRUE),
@@ -111,13 +96,83 @@ df2 <- df2 %>%
 # 6 保存
 # =========================
 
-out_file <- file.path("data", "processed",
-          paste0("生物季節観測_", stn, "_DOY_Temp_ENSO.csv"))
+out_file <- here("data", "processed", 
+                 glue("生物季節観測_{stn}_DOY_Temp_ENSO.csv")
+          )
 write_csv(df2, out_file)
 
 # =========================
 # 以下、解析
 # =========================
+# 図化オプション
+library(showtext)
+showtext_auto()
+
+theme_presentation <- function(base_size = 20){
+  
+  theme_bw(base_size = base_size) +
+  theme(
+    plot.title = element_text(size = 28, face = "bold"),
+    plot.subtitle = element_text(size = 20),
+    axis.title = element_text(size = 22),
+    axis.text = element_text(size = 18),
+    legend.title = element_text(size = 18),
+    legend.text = element_text(size = 16),
+    legend.position = c(0.18, 0.90),
+    legend.background =
+      element_rect(fill = scales::alpha("white", 0.6), color = NA)
+  )
+}
+
+scale_enso <- function(){
+  list(
+    scale_color_manual(
+      values = c(
+        ElNino  = "#d73027",
+        LaNina  = "#1a9850",
+        Neutral = "#4575b4"
+      ),
+      na.translate = FALSE
+    ),
+    scale_shape_manual(
+      values = c(
+        ElNino = 16,
+        LaNina = 17,
+        Neutral = 15
+      ),
+      na.translate = FALSE
+    )
+  )
+}
+
+plot_scatter_template <- function(df, x, y, title = NULL, subtitle = NULL, xlab = NULL, ylab = NULL){
+  ggplot(
+    df,
+    aes(
+      x = {{ x }},
+      y = {{ y }},
+      color = ENSO_next_winter,
+      shape = ENSO_next_winter
+    )
+  ) +
+    geom_smooth(method = "lm", se = TRUE, alpha = 0.12, linewidth=1.3) +
+    geom_point(size = 3) +
+    scale_enso() +
+    labs(
+      title = title,
+      subtitle = subtitle,
+      x = xlab,
+      y = ylab,
+      color = "次の冬 ENSO",
+      shape = "次の冬 ENSO"
+    ) +
+    coord_cartesian(
+      xlim = c(19, 25.5),
+      ylim = c(0.8, 5.2)
+    ) +
+    theme_presentation()
+}
+
 # 全体
 df2 %>%
   summarise(
@@ -134,6 +189,7 @@ cor.test(
 )
 # 次の冬　ENSO別
 df2 %>%
+  drop_na(ENSO_next_winter, 夏平均気温, 次の冬平均気温) %>%
   group_by(ENSO_next_winter) %>%
   summarise(
     n = sum(complete.cases(夏平均気温, 次の冬平均気温)),
@@ -143,6 +199,7 @@ df2 %>%
 
 # 夏 ENSO別
 df2 %>%
+  drop_na(ENSO_next_winter, 夏平均気温, 次の冬平均気温) %>%
   group_by(ENSO_summer) %>%
   summarise(
     n = sum(complete.cases(夏平均気温, 次の冬平均気温)),
@@ -151,50 +208,17 @@ df2 %>%
   )
 
 
-library(ggplot2)
-library(showtext)
-showtext_auto()
+df_plot <- df2 |> drop_na(ENSO_next_winter, 夏平均気温, 次の冬平均気温)
 
-df_plot <- df2 |>
-  dplyr::filter(!is.na(ENSO_next_winter))
-
-p <- ggplot(
-  df_plot,
-  aes(
-    x = 夏平均気温, y = 次の冬平均気温, 
-    color = ENSO_next_winter,
-    shape = ENSO_next_winter
-  )
-) +
-  scale_shape_manual(
-      values = c(
-        ElNino = 16,   # ●
-        LaNina = 17,   # ▲
-        Neutral = 15   # ■
-      )
-  ) + 
-  scale_color_brewer(palette = "Dark2") +
-  geom_point(size = 3.5, alpha = 0.8) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 1.2, alpha = 0.6) +
-  labs(
-    title = paste("夏平均気温と次の冬平均気温の関係",stn),
-    subtitle = "ENSO_next_winter 別の回帰線",
-    x = "夏平均気温 (6–8月)",
-    y = "次の冬平均気温 (12月–翌2月)",
-    color = "次の冬 ENSO",
-    shape = "次の冬 ENSO"
-  ) +
-  theme_bw(base_size=22) +
-  theme(
-    plot.title = element_text(size = 32, face = "bold"),
-    plot.subtitle = element_text(size = 24),
-    axis.title = element_text(size = 24),
-    axis.text = element_text(size = 20),
-    legend.title = element_text(size = 22),
-    legend.text = element_text(size = 18),
-    legend.position = c(0.20, 0.85),
-    legend.background = element_rect(fill = scales::alpha("white", 0.6), color = NA)
-  )
+p <- plot_scatter_template(
+  df_plot, 
+  夏平均気温, 
+  次の冬平均気温,
+  title = paste("夏平均気温と次の冬平均気温の関係",stn),
+  subtitle = "ENSO_next_winter 別の回帰線",
+  xlab = "夏平均気温 (6–8月)",
+  ylab = "次の冬平均気温 (12月–翌2月)"
+  ) 
 p
 ggsave(
   filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_",stn,".png")),
@@ -204,201 +228,182 @@ ggsave(
   dpi = 300
 )
 
-# ***
-library(dplyr)
-library(ggplot2)
-library(scales)
+# ***********************
+library(tidyverse)
+library(showtext)
+showtext_auto()
 
-# ---------------------------------
-# 0) 作図データ
-# ---------------------------------
-df_plot <- df2 %>%
-  filter(
-    !is.na(夏平均気温),
-    !is.na(次の冬平均気温),
-    !is.na(ENSO_next_winter)
-  )
-
-# ---------------------------------
-# 1) 軸範囲をここで指定
-#    NULL なら自動
-# ---------------------------------
-x_min <- NULL
-x_max <- NULL
-y_min <- NULL
-y_max <- NULL
-
-# 例:
-# x_min <- 18
-# x_max <- 28
-# y_min <- 0
-# y_max <- 5
-
-# ---------------------------------
-# 2) プレゼン用テーマ
-# ---------------------------------
-theme_presentation <- function(base_size = 20) {
+theme_presentation <- function(base_size = 20){
   theme_bw(base_size = base_size) +
     theme(
-      plot.title = element_text(size = base_size * 1.4, face = "bold"),
-      plot.subtitle = element_text(size = base_size * 1.0),
-      axis.title = element_text(size = base_size * 1.0),
-      axis.text = element_text(size = base_size * 0.82),
-      legend.title = element_text(size = base_size * 0.9),
-      legend.text = element_text(size = base_size * 0.82),
-      legend.position = c(0.18, 0.84),
-      legend.background = element_rect(
-        fill = alpha("white", 0.65),
-        color = NA
-      ),
-      panel.grid.minor = element_blank()
+      plot.title = element_text(size = 28, face = "bold"),
+      plot.subtitle = element_text(size = 20),
+      axis.title = element_text(size = 22),
+      axis.text = element_text(size = 18),
+      legend.title = element_text(size = 18),
+      legend.text = element_text(size = 16),
+      strip.text = element_text(size = 18, face = "bold"),
+      legend.position = "none",
+      legend.background =
+        element_rect(fill = scales::alpha("white", 0.6), color = NA)
     )
 }
 
-# ---------------------------------
-# 3) 図中注記（Pearson の r, p）
-#    群ごとに表示
-# ---------------------------------
-ann <- df_plot %>%
-  group_by(ENSO_next_winter) %>%
-  summarise(
-    n = sum(complete.cases(夏平均気温, 次の冬平均気温)),
-    r = cor(夏平均気温, 次の冬平均気温, use = "complete.obs"),
-    p = cor.test(夏平均気温, 次の冬平均気温)$p.value,
-    .groups = "drop"
-  ) %>%
-  mutate(
-    label = paste0(
-      ENSO_next_winter, "\n",
-      "r = ", sprintf("%.2f", r), "\n",
-      "p = ", sprintf("%.3f", p)
+scale_enso <- function(){
+  list(
+    scale_color_manual(
+      values = c(
+        ElNino  = "#d73027",
+        LaNina  = "#1a9850",
+        Neutral = "#4575b4"
+      ),
+      na.translate = FALSE
+    ),
+    scale_shape_manual(
+      values = c(
+        ElNino = 16,
+        LaNina = 17,
+        Neutral = 15
+      ),
+      na.translate = FALSE
     )
   )
+}
 
-# 注記位置は必要に応じて調整
-# 右上に縦に並べる例
-x_right <- if (is.null(x_max)) max(df_plot$夏平均気温, na.rm = TRUE) else x_max
-y_top   <- if (is.null(y_max)) max(df_plot$次の冬平均気温, na.rm = TRUE) else y_max
+plot_scatter_facet_enso <- function(
+    df,
+    x,
+    y,
+    enso_col = ENSO_next_winter,
+    title = NULL,
+    subtitle = NULL,
+    xlab = NULL,
+    ylab = NULL,
+    xlim = c(19, 25.5),
+    ylim = c(0.8, 5.2),
+    method = "pearson"   # "pearson" or "spearman"
+){
+  # 解析に必要な列だけ残す
+  df_plot <- df %>%
+    drop_na({{ enso_col }}, {{ x }}, {{ y }}) %>%
+    mutate(.enso = {{ enso_col }})
+  
+  # パネルごとの相関とp値
+  ann <- df_plot %>%
+    group_by(.enso) %>%
+    summarise(
+      n = n(),
+      r = cor({{ x }}, {{ y }}, method = method),
+      p = cor.test({{ x }}, {{ y }}, method = method, exact = FALSE)$p.value,
+      .groups = "drop"
+    ) %>%
+    mutate(
+      label = if (method == "spearman") {
+        paste0("rho = ", sprintf("%.2f", r), "\n",
+               "p = ", sprintf("%.3f", p), "\n",
+               "n = ", n)
+      } else {
+        paste0("r = ", sprintf("%.2f", r), "\n",
+               "p = ", sprintf("%.3f", p), "\n",
+               "n = ", n)
+      },
+      # 各パネルの右上に置く
+      x_lab = xlim[2] - 0.15,
+      y_lab = ylim[2] - 0.15
+    )
+  
+  ggplot(
+    df_plot,
+    aes(
+      x = {{ x }},
+      y = {{ y }},
+      color = .enso,
+      shape = .enso
+    )
+  ) +
+    geom_smooth(
+      method = "lm",
+      se = TRUE,
+      alpha = 0.12,
+      linewidth = 1.3
+    ) +
+    geom_point(size = 3) +
+    geom_text(
+      data = ann,
+      aes(x = x_lab, y = y_lab, label = label),
+      inherit.aes = FALSE,
+      hjust = 1,
+      vjust = 1,
+      size = 6
+    ) +
+    scale_enso() +
+    labs(
+      title = title,
+      subtitle = subtitle,
+      x = xlab,
+      y = ylab,
+      color = "ENSO",
+      shape = "ENSO"
+    ) +
+    coord_cartesian(
+      xlim = xlim,
+      ylim = ylim
+    ) +
+    facet_wrap(~ .enso, ncol = 3) +
+    theme_presentation()
+}
 
-ann <- ann %>%
-  arrange(desc(ENSO_next_winter)) %>%
-  mutate(
-    x = x_right,
-    y = seq(y_top, y_top - 0.9, length.out = n())
-  )
+p_facet <- plot_scatter_facet_enso(
+  df2,
+  夏平均気温,
+  次の冬平均気温,
+  enso_col = ENSO_next_winter,
+  title = paste("夏平均気温と次の冬平均気温の関係", stn),
+  subtitle = "ENSO_next_winter ごとの散布図と回帰線",
+  xlab = "夏平均気温 (6–8月)",
+  ylab = "次の冬平均気温 (12月–翌2月)",
+  xlim = c(19, 25.5),
+  ylim = c(0.8, 5.2),
+  method = "pearson"
+)
 
-# ---------------------------------
-# 4) 図本体
-# ---------------------------------
-p <- ggplot(
-  df_plot,
-  aes(
-    x = 夏平均気温,
-    y = 次の冬平均気温,
-    color = ENSO_next_winter,
-    shape = ENSO_next_winter
-  )
-) +
-  geom_smooth(
-    method = "lm",
-    se = FALSE,
-    linewidth = 1.0,
-    alpha = 0.18
-  ) +
-  geom_point(
-    size = 3.2,
-    alpha = 0.9
-  ) +
-  geom_text(
-    data = ann,
-    aes(x = x, y = y, label = label, color = ENSO_next_winter),
-    inherit.aes = FALSE,
-    hjust = 1,
-    vjust = 1,
-    size = 5.2
-  ) +
-  scale_shape_manual(
-    values = c(
-      ElNino = 16,   # ●
-      LaNina = 17,   # ▲
-      Neutral = 15   # ■
-    ),
-    na.translate = FALSE
-  ) +
-  scale_color_manual(
-    values = c(
-      ElNino = "#d73027",
-      LaNina = "#1a9850",
-      Neutral = "#4575b4"
-    ),
-    na.translate = FALSE
-  ) +
-  labs(
-    title = paste("夏平均気温と次の冬平均気温の関係", stn),
-    subtitle = "ENSO_next_winter 別の回帰線",
-    x = "夏平均気温 (6–8月)",
-    y = "次の冬平均気温 (12月–翌2月)",
-    color = "次の冬 ENSO",
-    shape = "次の冬 ENSO"
-  ) +
-  coord_cartesian(
-    xlim = c(x_min, x_max),
-    ylim = c(y_min, y_max)
-  ) +
-  theme_presentation(base_size = 20)
+p_facet
 
-p
-
-# ---------------------------------
-# 5) 保存
-# ---------------------------------
 ggsave(
-  filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_", stn, ".png")),
-  plot = p,
-  width = 10,
-  height = 6,
-  units = "in",
+  filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_facet_", stn, ".png")),
+  plot = p_facet,
+  width = 12,
+  height = 5,
   dpi = 300
 )
 
-# ******
-# 長期トレンドを除去した場合
-
 df3 <- df2 %>%
+  drop_na(ENSO_next_winter, 夏平均気温, 次の冬平均気温, 年) %>%
   mutate(
-    夏_det = resid(lm(夏平均気温 ~ 年)),
-    冬_det = resid(lm(次の冬平均気温 ~ 年))
+    夏平均気温_dt = resid(lm(夏平均気温 ~ 年, data = cur_data())),
+    次の冬平均気温_dt = resid(lm(次の冬平均気温 ~ 年, data = cur_data()))
   )
 
-cor.test(
-  df3$夏_det,
-  df3$冬_det,
-  method = "spearman"
+p_facet_dt <- plot_scatter_facet_enso(
+  df3,
+  夏平均気温_dt,
+  次の冬平均気温_dt,
+  enso_col = ENSO_next_winter,
+  title = paste("夏平均気温と次の冬平均気温の関係", stn),
+  subtitle = "ENSO_next_winter ごとの散布図と回帰線（長期トレンド除去後）",
+  xlab = "夏平均気温偏差（トレンド除去後）",
+  ylab = "次の冬平均気温偏差（トレンド除去後）",
+  xlim = c(-3, 3),
+  ylim = c(-2, 2),
+  method = "pearson"
 )
 
-df3 %>%
-  group_by(ENSO_next_winter) %>%
-  summarise(
-    r = cor(夏_det, 冬_det, use="complete.obs"),
-    rho = cor(夏_det, 冬_det, method="spearman", use="complete.obs")
-  )
+p_facet_dt
 
-ggplot(df3,
-       aes(x = 夏_det, y = 冬_det,
-           color = ENSO_next_winter)) +
-  geom_point() +
-  geom_smooth(method="lm", se=FALSE)+
-  labs(
-    title = paste("夏平均気温と次の冬平均気温の関係",stn),
-    subtitle = "ENSO_next_winter 別の回帰線　（長期トレンド除去後）",
-    x = "夏平均気温 (6–8月)",
-    y = "次の冬平均気温 (12月–翌2月)",
-    color = "次の冬 ENSO"
-  ) +
-  theme_bw() +
-  theme(
-    legend.position = c(0.2, 0.9),
-    legend.background = element_rect(fill = scales::alpha("white", 0.6), color = NA)
-  )
-
-
+ggsave(
+  filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_facet_detrend_", stn, ".png")),
+  plot = p_facet_dt,
+  width = 12,
+  height = 5,
+  dpi = 300
+)
