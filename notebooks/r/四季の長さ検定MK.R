@@ -4,14 +4,16 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(modifiedmk)
-
-station_name = "SENDAI"
+library(glue)
 
 DATA_DIR <- here("data", "processed")
 OUTPUT_DIR <- here("outputs")
 print(DATA_DIR)
 
-df <- read.csv(here(DATA_DIR, "b47590_4season_1982_2022.csv"))
+# 仙台:b47590、東京:b47662、大阪:b47772、福岡:b47807
+station_name = "FUKUOKA"
+
+df <- read.csv(here(DATA_DIR, "b47807_4season_1982_2022.csv"))
 
 # 1. 縦長に変換
 df_long <- df %>%
@@ -67,7 +69,10 @@ p <- ggplot(df_long, aes(x = year, y = days)) +
 
 # ---- PNG保存 ----
 ggsave(
-  filename = file.path(OUTPUT_DIR, "season_length_trend.png"),
+  filename = file.path(
+    OUTPUT_DIR, 
+    glue("{station_name}_season_length_trend.png")
+  ),
   plot = p,
   width = 8,
   height = 6,

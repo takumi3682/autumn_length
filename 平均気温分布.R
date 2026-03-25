@@ -130,7 +130,7 @@ plot_kde_season_total <- function(data, start_year, end_year, station_name = NUL
     theme(legend.position = c(0.83, 0.90)) 
 }
 
-p <- plot_kde_season_total(df2, 1991, 2020, "仙台")
+p <- plot_kde_season_total(df, 1991, 2020, "仙台")
 p
 ggsave(
   filename = file.path(OUTPUT_DIR, "kde_warm-cold_end1-end2.png"),

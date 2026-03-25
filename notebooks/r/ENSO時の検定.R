@@ -118,7 +118,7 @@ theme_presentation <- function(base_size = 20){
       legend.title = element_text(size = 18),
       legend.text = element_text(size = 16),
       strip.text = element_text(size = 18, face = "bold"),
-      legend.position = "none",
+      legend.position = c(0.90, 0.90),
       legend.background =
         element_rect(fill = scales::alpha("white", 0.6), color = NA)
     )
@@ -127,6 +127,7 @@ theme_presentation <- function(base_size = 20){
 scale_enso <- function(){
   list(
     scale_color_manual(
+      name = "ENSO phase",
       values = c(
         ElNino  = "#d73027",
         LaNina  = "#1a9850",
@@ -135,6 +136,7 @@ scale_enso <- function(){
       na.translate = FALSE
     ),
     scale_shape_manual(
+      name = "ENSO phase",
       values = c(
         ElNino = 16,
         LaNina = 17,
@@ -242,7 +244,8 @@ p_facet <- plot_scatter_facet_enso(
   method = "pearson"
 )
 
-p_facet
+p_facet +
+  theme(legend.position = "none" )
 
 ggsave(
   filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_facet_", stn, ".png")),
@@ -273,12 +276,47 @@ p_facet_dt <- plot_scatter_facet_enso(
   method = "pearson"
 )
 
-p_facet_dt
+p_facet_dt +
+  theme(legend.position = "none")
 
-ggsave(
-  filename = file.path(OUTPUT_DIR, paste0("夏ー冬トレンド_ENSO_facet_detrend_", stn, ".png")),
-  plot = p_facet_dt,
-  width = 12,
-  height = 5,
-  dpi = 300
-)
+ggsave
+
+# -------------------------------
+# 冷夏／暖冬の評価
+# -------------------------------
+
+# -------------------------------
+# 冷夏／暖冬の評価用データ
+# -------------------------------
+df_fisher <- df3 %>%
+  drop_na(夏平均気温_dt, 次の冬平均気温_dt, ENSO_next_winter) %>%
+  mutate(
+    cold_summer = 夏平均気温_dt < 0,
+    warm_winter = 次の冬平均気温_dt > 0,
+    quad = case_when(
+      夏平均気温_dt < 0 & 次の冬平均気温_dt > 0  ~ "冷夏・暖冬",
+      夏平均気温_dt < 0 & 次の冬平均気温_dt <= 0 ~ "冷夏・寒冬",
+      夏平均気温_dt >= 0 & 次の冬平均気温_dt > 0 ~ "暑夏・暖冬",
+      TRUE                                         ~ "暑夏・寒冬"
+    )
+  )
+
+# 2x2表とFisher検定
+tab <- table(df_fisher$cold_summer, df_fisher$warm_winter)
+ft  <- fisher.test(tab)
+
+# 相関
+ct <- cor.test(df_fisher$夏平均気温_dt, df_fisher$次の冬平均気温_dt, method = "pearson")
+
+lab_cor <- sprintf("r = %.2f\np = %.3f\nn = %d",
+                   unname(ct$estimate), ct$p.value, nrow(df_fisher))
+lab_fisher <- sprintf("Fisher exact test\np = %.3f", ft$p.value)
+
+# 象限ごとの件数
+quad_counts <- df_fisher %>%
+  count(quad) %>%
+  mutate(
+    x = c(-2.2, -2.2,  2.2,  2.2),
+    y = c( 1.55, -1.55, 1.55, -1.55)
+  )
+

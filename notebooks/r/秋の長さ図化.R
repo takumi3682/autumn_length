@@ -3,12 +3,13 @@ library(ggplot2)
 library(tidyr)
 library(dplyr)
 library(glue)
+library(here)
 
-stn = "山形"
-df <- read_csv(
-  file.path("data", "raw",
-            paste0("生物季節観測_", stn, "_DOY_Temp.csv"))
-)
+stn = "福岡"
+fp = here("data", "raw", glue("生物季節観測_{stn}_DOY_Temp.csv"))
+print(fp)
+df <- read_csv(fp)
+
 df
 # 日本語が豆腐になるのを避けたい場合（必要なら）
 library(showtext)
@@ -212,7 +213,8 @@ plot(df$年, df$すすき開花, type="p", ylim=c(200,350),
 points(df$年, df$いちょう黄葉, col="red", pch=2)
 ragg::agg_png("fig.png", width=1200, height=800, res=144)
 par(family="jp")
-plot()
+plot(df$年, df$すすき開花, type="p", ylim=c(200,350),
+     xlab="Year", ylab="Days of Year", col="green", pch=1)
 dev.off()
 
 plot(df$年, df$いちょう黄葉-df$すすき開花,
