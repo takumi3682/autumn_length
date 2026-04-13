@@ -1,3 +1,24 @@
+---
+title: "秋の長さの解析：仙台・山形における気温分布の比較"
+subtitle: "東北支部5月例会"
+author: "IWABUCHI, Takumi"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true   # コードを折りたたんで表示（クリックで展開）
+    embed-resources: true # HTML1枚にすべて埋め込む（配布に便利）
+    theme: cosmo
+
+execute:
+  warning: false
+  message: false
+---
+
+## 設定
+
+```{r}
 library(arrow)
 library(dplyr)
 library(ggplot2)
@@ -6,6 +27,7 @@ library(here)
 library(glue)
 library(showtext)
 showtext_auto()
+source(here("notebooks", "r", "theme.R"))
 
 #========================================
 # 保存先
@@ -13,6 +35,16 @@ showtext_auto()
 OUTPUT_DIR <- here("outputs")
 dir.create(OUTPUT_DIR, showWarnings = FALSE, recursive = TRUE)
 
+# ## 設定 チャンク内に追記
+font_size <- 12
+paper_width <- 10  # インチ
+paper_height <- 7  # インチ
+
+```
+
+## 関数群
+
+```{r}
 #========================================
 # 1. データ読み込み関数
 #========================================
@@ -70,6 +102,7 @@ add_4season <- function(data) {
       )
     )
 }
+
 
 #========================================
 # 4. 単年ヒストグラム
@@ -366,8 +399,6 @@ plot_kde_four_seasons_compare <- function(data,
     )
 }
 
-source(here("notebooks", "r", "theme.R"))
-
 save_png <- function(p, file_name, paper_width, paper_height)
 {
   ggsave(
@@ -376,35 +407,78 @@ save_png <- function(p, file_name, paper_width, paper_height)
   )
 }
 
+```
+
+## 実行部
+
+```{r}
+
 station_id   <- "b47590"
 station_name <- "仙台"
 station_name_e <- "Sendai"
 
 df <- read_temp_parquet(station_id)
+```
 
+## 平均気温の分布
+
+仙台の年間平均気温の分布（ヒストグラム）は次の通り（2020年）
+
+```{r}
 p1 <- plot_hist_single_year(df, 2020, station_name)
 p1
+```
+5℃付近と24℃付近にピークを持つ2峰型のように見える。
+期間を1991〜2020年の30年間として同様のグラフを描いてみる。
 
+```{r}
 p2 <- plot_hist_period(df, 1991, 2020, station_name)
 p2
+```
+2峰型が明瞭に現れた。
+これを確率密度関数で表してみる。
 
+```{r}
 p3 <- plot_kde_period(df, 1991, 2020, station_name_e)
 p3
 save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
+```
+これを1961〜1990年と、1991〜2020年で比較してみる。
 
-p4 <- plot_kde_warm_cold_total(df, 1991, 2020, station_name_e)
-p4
-save_png(p4, glue(station_name, "_Tmean_KDE_warm-cold_1991-2020.png"), paper_width, paper_height)
-
+```{r}
 p5 <- plot_kde_two_periods(df, 1961, 1990, 1991, 2020, station_name_e)
 p5
 save_png(p5, glue(station_name, "_Tmean_KDE_1961-1990_vs_1991-2020.png"), paper_width, paper_height)
+```
+1961〜1990年に比べると、1991〜2020年の分布は全体的に右側（暖候側）にシフトしていることがわかる。
+1961〜1990年に比べ、1991〜2020年が「温かい期間」となっていることが確認出来た。
 
+次に、暖候期と寒候期の重ね合わせで2峰型になっているのではないかと予想した。
+
+```{r}
+p4 <- plot_kde_warm_cold_total(df, 1991, 2020, station_name_e)
+p4
+save_png(p4, glue(station_name, "_Tmean_KDE_warm-cold_1991-2020.png"), paper_width, paper_height)
+```
+予想通り、暖候期と寒候期の重ね合わせになっていることが確認出来た。
+
+次に、解像度を上げて春・夏・秋・冬の4季に分割してみた。春:3〜5月、夏:6〜8月、秋:9〜11月、冬:12〜2月である。
+
+```{r}
 p6 <- plot_kde_four_seasons(df, station_name_e)
 p6
 save_png(p6, glue(station_name, "_Tmean_KDE_4seasons_1991-2020.png"), paper_width, paper_height)
+```
+季節毎に分布の特色が違っている事が判った。
+冬と夏がピーク付近に集中しているが、冬の方が圧倒的にまとまっている。冬季の気温変化は相対的に小さく、安定した気候になっているといえる。
+夏については2峰型にも見えること、左側（寒候側）に尾を引いているようにみえる。仮説として海風の影響が考えられる。これは他の地域（日本海側の山形とか？）との比較が必要と考える。
+夏・冬に比べると春・秋は分布の範囲が広いことが読み取れる。特に春はピークらしいピークが見えない分布になっている。
 
+次に、1961〜1990年／1991〜2020年の比較を、季節毎に行ってみた。
+```{r}
 p7 <- plot_kde_four_seasons_compare(df, 1961, 1990, 1991, 2020, station_name_e)
 p7
 save_png(p7, glue(station_name, "_Tmean_KDE_warm-cold_4panel_1991-2020.png"), paper_width, paper_height)
 
+```
+全ての季節で右側（暖候側）へのシフトが確認出来るが、特に冬のシフトが大きい。

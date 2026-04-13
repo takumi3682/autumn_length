@@ -1,3 +1,22 @@
+---
+  title: "秋の長さの解析：仙台・山形における気温分布の比較"
+subtitle: "東北支部5月例会"
+author: "IWABUCHI, Takumi"
+date: last-modified
+format:
+  html:
+  toc: true
+toc-depth: 2
+code-fold: true   # コードを折りたたんで表示（クリックで展開）
+embed-resources: true # HTML1枚にすべて埋め込む（配布に便利）
+theme: cosmo
+
+execute:
+  warning: false
+message: false
+---
+  
+```{r}
 library(arrow)
 library(dplyr)
 library(ggplot2)
@@ -70,7 +89,9 @@ add_4season <- function(data) {
       )
     )
 }
+```
 
+```{r}
 #========================================
 # 4. 単年ヒストグラム
 #========================================
@@ -408,3 +429,4 @@ p7 <- plot_kde_four_seasons_compare(df, 1961, 1990, 1991, 2020, station_name_e)
 p7
 save_png(p7, glue(station_name, "_Tmean_KDE_warm-cold_4panel_1991-2020.png"), paper_width, paper_height)
 
+```

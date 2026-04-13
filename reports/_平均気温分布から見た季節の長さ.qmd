@@ -1,0 +1,143 @@
+### 「秋の長さ解析」報告用 Quartoテンプレート (`autumn_analysis.qmd`)
+
+---
+title: "秋の長さの解析：仙台・山形における気温分布の比較"
+subtitle: "東北支部5月例会"
+author: "IWABUCHI, Takumi"
+date: last-modified
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    code-fold: true   # コードを折りたたんで表示（クリックで展開）
+    embed-resources: true # HTML1枚にすべて埋め込む（配布に便利）
+    theme: cosmo
+
+execute:
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# 1. ライブラリ読み込み
+library(arrow)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(here)
+library(glue)
+library(showtext)
+showtext_auto()
+
+# 2. 外部設定（テーマなど）の読み込み
+# 既存のテーマファイルを読み込み
+
+# 3. 定数・保存設定
+DATA_DIR <- here("data")
+print(DATA_DIR)
+source(here("notebooks", "r", "theme.R"))
+#dir.create(OUTPUT_DIR, showWarnings = FALSE, recursive = TRUE)
+
+station_id     <- "b47590"
+station_name   <- "仙台"
+station_name_e <- "Sendai"
+```
+
+## 1. 解析の背景と目的
+
+-   秋の長さの変化を「日平均気温の分布（KDE）」から捉える。
+-   仙台と山形の比較を通じて、海の影響が季節の移行にどう現れるかを検証中。
+
+## 2. 全体的な気温分布の変遷
+
+まず、1961年〜1990年と1991年〜2020年の2期間で、日平均気温の分布がどのようにシフトしたかを確認します。
+
+```{r}
+read_temp_parquet <- function(station_id,
+                              base_dir = "/Volumes/Transcend/projects/MetData/JMA") {
+  
+  parquet_file <- file.path(
+    base_dir,
+    "daily_monthly",
+    station_id,
+    paste0(station_id, "_temp.parquet")
+  )
+  
+  read_parquet(parquet_file) |>
+    mutate(
+      date  = as.Date(date),
+      year  = year(date),
+      month = month(date)
+    )
+}
+```
+
+```{r}
+#| label: fig-compare-periods
+#| fig-cap: "仙台における2期間の気温分布比較"
+#| fig-width: 8
+#| fig-height: 5
+
+df <- read_temp_parquet(station_id)
+
+plot_kde_two_periods(df, 1961, 1990, 1991, 2020, station_name_e)
+```
+
+::: callout-note
+### 考察のメモ
+
+-   全体的に分布が右（高温側）へシフトしている。
+-   特に低温側のピークが削られており、冬の寒さの緩和が顕著。
+:::
+
+## 3. 季節ごとの詳細分析
+
+「秋の長さ」に直結する、季節別の分布変化を深掘りします。
+
+```{r}
+#| label: fig-seasonal-compare
+#| fig-cap: "季節別・2期間比較KDE"
+#| fig-width: 10
+#| fig-height: 8
+
+plot_kde_four_seasons_compare(df, 1961, 1990, 1991, 2020, station_name_e)
+```
+
+## 4. 今後の検討事項
+
+-   **山形データの統合**: 海の影響を受けにくい山形の内陸データと比較。
+-   **しきい値の定義**: 「秋」と定義する温度帯を固定し、その日数の推移を算出する。
+
+------------------------------------------------------------------------
+
+## 付録：自動保存実行
+
+```{r}
+#| label: save-outputs
+#| include: false
+
+# 勉強会後に別途画像が必要な場合のために実行
+p_final <- plot_kde_four_seasons_compare(df, 1961, 1990, 1991, 2020, station_name_e)
+save_png(p_final, glue(station_name, "_Seasonal_Compare.png"), paper_width, paper_height)
+```
+
+\`\`\`
+
+------------------------------------------------------------------------
+
+### この書き出し例のポイント
+
+1.  **Zoom映えする設定**:
+    -   `code-fold: true` により、発表時はグラフだけを見せ、質問が出た時だけコードを展開して見せることができます。
+    -   `embed-resources: true` により、作成されたHTMLファイル1つを相手に送れば、画像がリンク切れすることなく相手のブラウザで再現されます。
+2.  **既存資産の活用**:
+    -   `source(here(...))` を使っているので、すでに調整済みの `theme.R` や `paper_width` などの変数がそのまま反映されます。
+3.  **「作り直しなし」の運用**:
+    -   冒頭の `station_id` を書き換えてレンダリング（Render）するだけで、仙台版のレポートが即座に山形版にアップデートされます。
+4.  **考察の同時記録**:
+    -   `::: {.callout-note}`（コールアウト）を使うと、Zoomで見せた時に「ここがポイントです」という強調枠が表示されるため、スライド代わりになります。
+
+## この `.qmd` ファイルをRStudioで作成し、上部の **Render** ボタンを押してみてください。驚くほど綺麗な「報告書兼スライド」が出来上がるはずです。

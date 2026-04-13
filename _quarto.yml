@@ -1,5 +1,5 @@
 project:
-    type: website
+    type: default
     output-dir: docs
     resources:
       - outputs/**
