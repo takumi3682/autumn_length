@@ -18,7 +18,7 @@ editor:
     wrap: 72
 ---
 
-## 設定
+## 初期設定
 
 ```{r}
 library(arrow)
@@ -45,6 +45,7 @@ paper_height <- 7  # インチ
 ```
 
 ## 関数群
+今回の解析に使用した自作関数
 
 ```{r}
 #========================================
@@ -411,94 +412,6 @@ save_png <- function(p, file_name, paper_width, paper_height)
   )
 }
 
-```
-
-## 実行部
-
-```{r}
-
-station_id   <- "b47590"
-station_name <- "仙台"
-station_name_e <- "Sendai"
-
-df <- read_temp_parquet(station_id)
-```
-
-## 平均気温の分布
-
-仙台の年間平均気温の分布（ヒストグラム）は次の通り（2020年）
-
-```{r}
-p1 <- plot_hist_single_year(df, 2020, station_name)
-p1
-```
-
-5℃付近と24℃付近にピークを持つ2峰型のように見える。
-期間を1991〜2020年の30年間として同様のグラフを描いてみる。
-
-```{r}
-p2 <- plot_hist_period(df, 1991, 2020, station_name)
-p2
-```
-
-2峰型が明瞭に現れた。 これを確率密度関数で表してみる。
-
-```{r}
-p3 <- plot_kde_period(df, 1991, 2020, station_name_e)
-p3
-save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
-```
-
-## 気温分布の経年変化
-
-平均気温分布を1961〜1990年と1991〜2020年で比較してみる。
-
-```{r}
-p5 <- plot_kde_two_periods(df, 1961, 1990, 1991, 2020, station_name_e)
-p5
-save_png(p5, glue(station_name, "_Tmean_KDE_1961-1990_vs_1991-2020.png"), paper_width, paper_height)
-```
-
-1961〜1990年に比べると、1991〜2020年の分布は全体的に右側（暖候側）にシフトしていることがわかる。1991〜2020年が「温かい期間」となっていることが確認出来た。
-
-## 気温分布の詳細解析
-
-### 暖候期と寒候期
-
-2峰型については、暖候期と寒候期の重ね合わせではないかと予想し、確認してみた。暖候期を5〜10月、寒候期を11〜4月とした。
-
-```{r}
-p4 <- plot_kde_warm_cold_total(df, 1991, 2020, station_name_e)
-p4
-save_png(p4, glue(station_name, "_Tmean_KDE_warm-cold_1991-2020.png"), paper_width, paper_height)
-```
-
-予想通り、暖候期と寒候期の重ね合わせになっていることが確認出来た。
-
-### 4季分割
-
-次に、解像度を上げて春・夏・秋・冬の4季に分割してみた。春:3〜5月、夏:6〜8月、秋:9〜11月、冬:12〜2月とした。
-
-```{r}
-p6 <- plot_kde_four_seasons(df, station_name = station_name_e)
-p6
-save_png(p6, glue(station_name, "_Tmean_KDE_4seasons_1991-2020.png"), paper_width, paper_height)
-```
-
-## 気温分布からみた季節の特色
-
-季節毎に分布の特色が違っている事が判った。
-
--   冬と夏がピーク付近に集中しているが、冬の方が圧倒的にまとまっている。冬季の気温変化は相対的に小さく、安定した気候になっているといえる。
-
--   夏については左側（寒候側）に裾を引いているようにみえる。仮説として海風の影響が考えられる。これは他の地域（日本海側の山形とか？）との比較が必要と考える。
-
--   夏・秋はやや2峰型にも見えるので、月毎に解像度を上げて確認してみたい。
-
--   夏・冬に比べると春・秋は分布の範囲が広いことが読み取れる。特に春はピークらしいピークが見えない分布になっている。
-
-
-```{r}
 #========================================
 # 11. 夏秋KDE月別
 #========================================
@@ -507,14 +420,19 @@ plot_kde_target_months <- function(data,
                                    x_limits = c(-10, 35),
                                    station_name = NULL,
                                    base_size = font_size,
-                                   legend_position = c(0.82, 0.82)) {
+                                   legend_position = c(0.82, 0.82),
+                                   title = FALSE) {
   df_plot <- data |>
     filter(month %in% target_months, is.finite(temp_mean)) |>
     mutate(month_fct = factor(month,
                               levels = target_months,
                               labels = paste0(target_months, "月")))
 
-  title_txt <- "Monthly KDE of Daily Mean Temperature"
+  if (title == TRUE) {
+    title_txt <- "Monthly KDE of Daily Mean Temperature"
+  } else {
+    title_txt <- NULL
+  }
   if (!is.null(station_name)) {
     title_txt <- paste(title_txt, "/", station_name)
   }
@@ -537,29 +455,130 @@ plot_kde_target_months <- function(data,
 }
 ```
 
-```{r}
-# 春(3, 4, 5月)で描画
-plot_kde_target_months(df, target_months = c(3, 4, 5),station_name = "仙台")
-```
+## 仙台の解析
 
+### 平均気温の分布
 
-```{r}
-# デフォルト(6, 7, 8月)で描画
-plot_kde_target_months(df, station_name = "仙台")
-```
+仙台の年間平均気温の分布（ヒストグラム）は次の通り（2020年）
 
 ```{r}
-# 秋（9, 10, 11月）の比較
-plot_kde_target_months(df, target_months = c(9, 10, 11), station_name = "仙台")
+station_id   <- "b47590"
+station_name <- "仙台"
+station_name_e <- "Sendai"
+
+df <- read_temp_parquet(station_id)
+
+p1 <- plot_hist_single_year(df, 2020, station_name_e)
+p1
 ```
+
+5℃付近と24℃付近にピークを持つ2峰型のように見える。
+期間を1991〜2020年の30年間として同様のグラフを描いてみる。
+
+```{r}
+p2 <- plot_hist_period(df, 1991, 2020, station_name_e)
+p2
+```
+
+2峰型が明瞭に現れた。 これを確率密度関数で表してみる。
+
+```{r}
+p3 <- plot_kde_period(df, 1991, 2020, station_name_e)
+p3
+save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
+```
+
+### 気温分布の経年変化
+
+平均気温分布を1961〜1990年と1991〜2020年で比較してみる。
+
+```{r}
+p5 <- plot_kde_two_periods(df, 1961, 1990, 1991, 2020, station_name_e)
+p5
+save_png(p5, glue(station_name, "_Tmean_KDE_1961-1990_vs_1991-2020.png"), paper_width, paper_height)
+```
+
+1961〜1990年に比べると、1991〜2020年の分布は全体的に右側（暖候側）にシフトしていることがわかる。1991〜2020年が「温かい期間」となっていることが確認出来た。
+
+### 気温分布の詳細解析（暖候期と寒候期）
+
+2峰型については、暖候期と寒候期の重ね合わせではないかと予想し、確認してみた。暖候期を5〜10月、寒候期を11〜4月とした。
+
+```{r}
+p4 <- plot_kde_warm_cold_total(df, 1991, 2020, station_name_e)
+p4
+save_png(p4, glue(station_name, "_Tmean_KDE_warm-cold_1991-2020.png"), paper_width, paper_height)
+```
+
+予想通り、暖候期と寒候期の重ね合わせになっていることが確認出来た。
+
+### 気温分布の詳細解析（4季分割）
+
+次に、解像度を上げて春・夏・秋・冬の4季に分割してみた。春:3〜5月、夏:6〜8月、秋:9〜11月、冬:12〜2月とした。
+
+```{r}
+p6 <- plot_kde_four_seasons(df, station_name = station_name_e)
+p6
+save_png(p6, glue(station_name, "_Tmean_KDE_4seasons_1991-2020.png"), paper_width, paper_height)
+```
+
+### 気温分布からみた季節の特色
+
+季節毎に分布の特色が違っている事が判った。
+
+-   冬と夏がピーク付近に集中しているが、冬の方が圧倒的にまとまっている。冬季の気温変化は相対的に小さく、安定した気候になっているといえる。
+
+-   夏については左側（寒候側）に裾を引いているようにみえる。仮説として海風の影響が考えられる。これは他の地域（日本海側の山形とか？）との比較が必要と考える。
+
+-   夏・秋はやや2峰型にも見えるので、月毎に解像度を上げて確認してみたい。
+
+-   夏・冬に比べると春・秋は分布の範囲が広いことが読み取れる。特に春はピークらしいピークが見えない分布になっている。
 
 
 ```{r}
-# 冬（12, 1, 2月）の比較
-plot_kde_target_months(df, target_months = c(12, 1, 2), station_name = "仙台")
+# 初回のみインストールが必要な場合: install.packages("patchwork")
+library(patchwork)
+
+# 各季節のグラフをそれぞれ変数（p1〜p4）に格納する
+p_spring <- plot_kde_target_months(df, target_months = c(3, 4, 5), 
+            legend_position = c(0.80, 0.75), title = FALSE)
+p_summer <- plot_kde_target_months(df, target_months = c(6, 7, 8), 
+            legend_position = c(0.20, 0.75), title = FALSE)
+p_autumn <- plot_kde_target_months(df, target_months = c(9, 10, 11), 
+            legend_position = c(0.20, 0.75), title = FALSE)
+p_winter <- plot_kde_target_months(df, target_months = c(12, 1, 2), 
+            legend_position = c(0.80, 0.75), title = FALSE)
+
+# patchworkを使って、2行2列の4パネルにまとめる
+# (| が横に並べる、/ が縦に並べるという意味になります)
+combined_plot <- (p_spring | p_summer) / 
+                 (p_autumn | p_winter)
+
+final_plot <- combined_plot + 
+  # --- 全体のタイトル設定 ---
+  plot_annotation(
+    title = paste("Monthly KDE of Daily Mean Temperature / ", station_name_e),
+    subtitle = "1991-2020",
+    theme = theme(
+      plot.title = element_text(size = 18, face = "bold", hjust = 0.5), # 中央寄せ
+      plot.subtitle = element_text(size = 12, hjust = 0.5)
+    )
+  ) & # ← ここが重要！全てのパネルに適用
+  # --- 各パネルの微調整 ---
+  theme(
+    plot.title = element_text(size = 10),      # 各パネル（春・夏など）のタイトル
+    axis.title = element_text(size = 9),       # 軸ラベル（x, y軸の名前）
+    axis.text = element_text(size = 8),        # 軸の目盛り数字
+    legend.key.size = unit(0.4, "cm"),
+    legend.text = element_text(size = 8)
+#    legend.position = "none"                   # もし凡例が不要なら一括で消せる
+  )
+
+# 描画
+print(final_plot)
 ```
 
-## 4季分割の経年変化
+### 4季分割の経年変化
 
 次に、1961〜1990年／1991〜2020年の比較を、季節毎に行ってみた。
 
@@ -571,3 +590,81 @@ save_png(p7, glue(station_name, "_Tmean_KDE_warm-cold_4panel_1991-2020.png"), pa
 ```
 
 全ての季節で右側（暖候側）へのシフトが確認出来るが、特に冬のシフトが大きい。
+
+## 山形の解析
+
+山形について同様の解析を行う。
+```{r}
+
+station_id   <- "b47588"
+station_name <- "山形"
+station_name_e <- "Yamagata"
+
+df <- read_temp_parquet(station_id)
+
+p3 <- plot_kde_period(df, 1991, 2020, station_name_e)
+p3
+save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
+
+```
+
+```{r}
+p5 <- plot_kde_two_periods(df, 1961, 1990, 1991, 2020, station_name_e)
+p5
+save_png(p5, glue(station_name, "_Tmean_KDE_1961-1990_vs_1991-2020.png"), paper_width, paper_height)
+```
+
+```{r}
+p6 <- plot_kde_four_seasons(df, station_name = station_name_e)
+p6
+save_png(p6, glue(station_name, "_Tmean_KDE_4seasons_1991-2020.png"), paper_width, paper_height)
+```
+
+```{r}
+# 初回のみインストールが必要な場合: install.packages("patchwork")
+#library(patchwork)
+
+# 各季節のグラフをそれぞれ変数（p1〜p4）に格納する
+p_spring <- plot_kde_target_months(df, target_months = c(3, 4, 5), 
+            legend_position = c(0.80, 0.75), title = FALSE)
+p_summer <- plot_kde_target_months(df, target_months = c(6, 7, 8), 
+            legend_position = c(0.20, 0.75), title = FALSE)
+p_autumn <- plot_kde_target_months(df, target_months = c(9, 10, 11), 
+            legend_position = c(0.20, 0.75), title = FALSE)
+p_winter <- plot_kde_target_months(df, target_months = c(12, 1, 2), 
+            legend_position = c(0.80, 0.75), title = FALSE)
+
+# patchworkを使って、2行2列の4パネルにまとめる
+# (| が横に並べる、/ が縦に並べるという意味になります)
+combined_plot <- (p_spring | p_summer) / 
+                 (p_autumn | p_winter)
+
+final_plot <- combined_plot + 
+  # --- 全体のタイトル設定 ---
+  plot_annotation(
+    title = paste("Monthly KDE of Daily Mean Temperature / ", station_name_e),
+    subtitle = "1991-2020",
+    theme = theme(
+      plot.title = element_text(size = 18, face = "bold", hjust = 0.5), # 中央寄せ
+      plot.subtitle = element_text(size = 12, hjust = 0.5)
+    )
+  ) & # ← ここが重要！全てのパネルに適用
+  # --- 各パネルの微調整 ---
+  theme(
+    plot.title = element_text(size = 10),      # 各パネル（春・夏など）のタイトル
+    axis.title = element_text(size = 9),       # 軸ラベル（x, y軸の名前）
+    axis.text = element_text(size = 8),        # 軸の目盛り数字
+    legend.key.size = unit(0.4, "cm"),
+    legend.text = element_text(size = 8)
+#    legend.position = "none"                   # もし凡例が不要なら一括で消せる
+  )
+
+# 描画
+print(final_plot)
+```
+
+```{r}
+p7 <- plot_kde_four_seasons_compare(df, 1961, 1990, 1991, 2020, station_name_e)
+p7
+save_png(p7, glue(station_name, "_Tmean_KDE_warm-cold_4panel_1991-2020.png"), paper_width, paper_height)
+```
