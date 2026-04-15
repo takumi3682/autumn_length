@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="IWABUCHI, Takumi">
-<meta name="dcterms.date" content="2026-04-14">
+<meta name="dcterms.date" content="2026-04-15">
 
 <title>秋の長さの解析：仙台・山形における気温分布の比較</title>
 <style>
@@ -150,7 +150,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 14, 2026</p>
+      <p class="date">April 15, 2026</p>
     </div>
   </div>
   
@@ -268,7 +268,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>  df_plot <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
 <span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">==</span> year_target)</span>
 <span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  title_txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(year_target, <span class="st">"Density of Daily Mean Temperature"</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  title_txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(year_target, <span class="st">" Density of Daily Mean Temperature"</span>)</span>
 <span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(station_name)) {</span>
 <span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="fu">paste0</span>(title_txt, <span class="st">" / "</span>, station_name)</span>
 <span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>  }</span>
@@ -409,7 +409,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-211"><a href="#cb2-211" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="cn">NULL</span>,</span>
 <span id="cb2-212"><a href="#cb2-212" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="cn">NULL</span></span>
 <span id="cb2-213"><a href="#cb2-213" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_presentation</span>(<span class="at">base_size =</span> base_size, <span class="at">legend_position =</span> legend_position) <span class="sc">+</span></span>
+<span id="cb2-214"><a href="#cb2-214" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_presentation</span>(<span class="at">base_size =</span> base_size <span class="sc">-</span> <span class="dv">3</span>, <span class="at">legend_position =</span> legend_position) <span class="sc">+</span></span>
 <span id="cb2-215"><a href="#cb2-215" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
 <span id="cb2-216"><a href="#cb2-216" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="fu">alpha</span>(<span class="st">"white"</span>, <span class="fl">0.5</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
 <span id="cb2-217"><a href="#cb2-217" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.key =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"transparent"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
@@ -566,41 +566,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-368"><a href="#cb2-368" aria-hidden="true" tabindex="-1"></a>plot_kde_target_months <span class="ot">&lt;-</span> <span class="cf">function</span>(data,</span>
 <span id="cb2-369"><a href="#cb2-369" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>),</span>
 <span id="cb2-370"><a href="#cb2-370" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">x_limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">35</span>),</span>
-<span id="cb2-371"><a href="#cb2-371" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">station_name =</span> <span class="cn">NULL</span>,</span>
-<span id="cb2-372"><a href="#cb2-372" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">base_size =</span> font_size,</span>
-<span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.82</span>, <span class="fl">0.82</span>),</span>
-<span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">title =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a>  df_plot <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
-<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(month <span class="sc">%in%</span> target_months, <span class="fu">is.finite</span>(temp_mean)) <span class="sc">|&gt;</span></span>
-<span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">month_fct =</span> <span class="fu">factor</span>(month,</span>
-<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> target_months,</span>
-<span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">paste0</span>(target_months, <span class="st">"月"</span>)))</span>
-<span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (title <span class="sc">==</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb2-382"><a href="#cb2-382" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="st">"Monthly KDE of Daily Mean Temperature"</span></span>
-<span id="cb2-383"><a href="#cb2-383" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb2-384"><a href="#cb2-384" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(station_name)) {</span>
-<span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="fu">paste</span>(title_txt, <span class="st">"/"</span>, station_name)</span>
-<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> temp_mean, <span class="at">color =</span> month_fct, <span class="at">fill =</span> month_fct)) <span class="sc">+</span></span>
-<span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> x_limits) <span class="sc">+</span></span>
-<span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
-<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> title_txt,</span>
-<span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Daily Mean Temperature (°C)"</span>,</span>
-<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Density"</span>,</span>
-<span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="cn">NULL</span>,</span>
-<span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="cn">NULL</span></span>
-<span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb2-400"><a href="#cb2-400" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_presentation</span>(<span class="at">base_size =</span> base_size, <span class="at">legend_position =</span> legend_position) <span class="sc">+</span></span>
-<span id="cb2-401"><a href="#cb2-401" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
-<span id="cb2-402"><a href="#cb2-402" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="fu">alpha</span>(<span class="st">"white"</span>, <span class="fl">0.6</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb2-403"><a href="#cb2-403" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.2</span>, <span class="st">"lines"</span>)</span>
-<span id="cb2-404"><a href="#cb2-404" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb2-405"><a href="#cb2-405" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-371"><a href="#cb2-371" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">y_limits =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.18</span>),</span>
+<span id="cb2-372"><a href="#cb2-372" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">station_name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-373"><a href="#cb2-373" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">base_size =</span> font_size,</span>
+<span id="cb2-374"><a href="#cb2-374" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.82</span>, <span class="fl">0.82</span>),</span>
+<span id="cb2-375"><a href="#cb2-375" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">title =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb2-376"><a href="#cb2-376" aria-hidden="true" tabindex="-1"></a>  df_plot <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb2-377"><a href="#cb2-377" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(month <span class="sc">%in%</span> target_months, <span class="fu">is.finite</span>(temp_mean)) <span class="sc">|&gt;</span></span>
+<span id="cb2-378"><a href="#cb2-378" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">month_fct =</span> <span class="fu">factor</span>(month,</span>
+<span id="cb2-379"><a href="#cb2-379" aria-hidden="true" tabindex="-1"></a>                              <span class="at">levels =</span> target_months,</span>
+<span id="cb2-380"><a href="#cb2-380" aria-hidden="true" tabindex="-1"></a>                              <span class="at">labels =</span> <span class="fu">paste0</span>(target_months, <span class="st">"月"</span>)))</span>
+<span id="cb2-381"><a href="#cb2-381" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-382"><a href="#cb2-382" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (title <span class="sc">==</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb2-383"><a href="#cb2-383" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="st">"Monthly KDE of Daily Mean Temperature"</span></span>
+<span id="cb2-384"><a href="#cb2-384" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb2-385"><a href="#cb2-385" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb2-386"><a href="#cb2-386" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-387"><a href="#cb2-387" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(station_name)) {</span>
+<span id="cb2-388"><a href="#cb2-388" aria-hidden="true" tabindex="-1"></a>    title_txt <span class="ot">&lt;-</span> <span class="fu">paste</span>(title_txt, <span class="st">"/"</span>, station_name)</span>
+<span id="cb2-389"><a href="#cb2-389" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb2-390"><a href="#cb2-390" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-391"><a href="#cb2-391" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> temp_mean, <span class="at">color =</span> month_fct, <span class="at">fill =</span> month_fct)) <span class="sc">+</span></span>
+<span id="cb2-392"><a href="#cb2-392" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-393"><a href="#cb2-393" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> x_limits, <span class="at">ylim =</span> y_limits) <span class="sc">+</span></span>
+<span id="cb2-394"><a href="#cb2-394" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb2-395"><a href="#cb2-395" aria-hidden="true" tabindex="-1"></a>      <span class="at">title =</span> title_txt,</span>
+<span id="cb2-396"><a href="#cb2-396" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="st">"Daily Mean Temperature (°C)"</span>,</span>
+<span id="cb2-397"><a href="#cb2-397" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="st">"Density"</span>,</span>
+<span id="cb2-398"><a href="#cb2-398" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-399"><a href="#cb2-399" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="cn">NULL</span></span>
+<span id="cb2-400"><a href="#cb2-400" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb2-401"><a href="#cb2-401" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_presentation</span>(<span class="at">base_size =</span> base_size, <span class="at">legend_position =</span> legend_position) <span class="sc">+</span></span>
+<span id="cb2-402"><a href="#cb2-402" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb2-403"><a href="#cb2-403" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="fu">alpha</span>(<span class="st">"white"</span>, <span class="fl">0.6</span>), <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb2-404"><a href="#cb2-404" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">1.2</span>, <span class="st">"lines"</span>)</span>
+<span id="cb2-405"><a href="#cb2-405" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-406"><a href="#cb2-406" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -608,7 +609,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="仙台の解析">仙台の解析</h2>
 <section id="平均気温の分布" class="level3">
 <h3 class="anchored" data-anchor-id="平均気温の分布">平均気温の分布</h3>
-<p>仙台の年間平均気温の分布（ヒストグラム）は次の通り（2020年）</p>
+<p>仙台の2020年の年間平均気温の分布（ヒストグラム）は次の通り。</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -618,28 +619,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_temp_parquet</span>(station_id)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_hist_single_year</span>(df, <span class="dv">2020</span>, station_name_e)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_hist_single_year</span>(df, <span class="dv">2020</span>, station_name_e, <span class="at">base_size =</span> <span class="dv">12</span>)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>p1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>5℃付近と24℃付近にピークを持つ2峰型のように見える。 期間を1991〜2020年の30年間として同様のグラフを描いてみる。</p>
+<p>2つのピークを持つ2峰型のように見える。 期間を1991〜2020年の30年間として同様のグラフを描いてみる。</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot_hist_period</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot_hist_period</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e, <span class="at">base_size =</span> <span class="dv">11</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -654,7 +655,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -663,6 +664,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p3, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<p>2℃と18℃付近にピークを持つ2峰型といえる。</p>
 </section>
 <section id="気温分布の経年変化" class="level3">
 <h3 class="anchored" data-anchor-id="気温分布の経年変化">気温分布の経年変化</h3>
@@ -670,13 +672,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">plot_kde_two_periods</span>(df, <span class="dv">1961</span>, <span class="dv">1990</span>, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">plot_kde_two_periods</span>(df, <span class="dv">1961</span>, <span class="dv">1990</span>, <span class="dv">1991</span>, <span class="dv">2020</span>, </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                           station_name_e, <span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -693,13 +696,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">plot_kde_warm_cold_total</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">plot_kde_warm_cold_total</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">base_size =</span> <span class="dv">12</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                               <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.83</span>,<span class="fl">0.90</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>p4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -716,13 +721,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">plot_kde_four_seasons</span>(df, <span class="at">station_name =</span> station_name_e)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">plot_kde_four_seasons</span>(df, <span class="at">station_name =</span> station_name_e,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>,<span class="fl">0.80</span>))</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -734,7 +740,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="気温分布からみた季節の特色" class="level3">
 <h3 class="anchored" data-anchor-id="気温分布からみた季節の特色">気温分布からみた季節の特色</h3>
-<p>季節毎に分布の特色が違っている事が判った。</p>
+<p>季節毎に分布の特色がある事が判った。</p>
 <ul>
 <li><p>冬と夏がピーク付近に集中しているが、冬の方が圧倒的にまとまっている。冬季の気温変化は相対的に小さく、安定した気候になっているといえる。</p></li>
 <li><p>夏については左側（寒候側）に裾を引いているようにみえる。仮説として海風の影響が考えられる。これは他の地域（日本海側の山形とか？）との比較が必要と考える。</p></li>
@@ -749,13 +755,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 各季節のグラフをそれぞれ変数（p1〜p4）に格納する</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>p_spring <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>p_summer <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>), </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>p_autumn <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>), </span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>p_winter <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># patchworkを使って、2行2列の4パネルにまとめる</span></span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co"># (| が横に並べる、/ が縦に並べるという意味になります)</span></span>
@@ -774,7 +780,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&amp;</span> <span class="co"># ← ここが重要！全てのパネルに適用</span></span>
 <span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 各パネルの微調整 ---</span></span>
 <span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),      <span class="co"># 各パネル（春・夏など）のタイトル</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),      <span class="co"># 各パネル（春・夏など）のタイトル</span></span>
 <span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),       <span class="co"># 軸ラベル（x, y軸の名前）</span></span>
 <span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),        <span class="co"># 軸の目盛り数字</span></span>
 <span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>),</span>
@@ -788,7 +794,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -806,7 +812,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -820,7 +826,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="山形の解析" class="level2">
 <h2 class="anchored" data-anchor-id="山形の解析">山形の解析</h2>
-<p>山形について同様の解析を行う。</p>
+<p>次に、山形について同様の解析を行い、仙台との比較を行う。</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -830,8 +836,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_temp_parquet</span>(station_id)</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">plot_kde_period</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">plot_kde_period</span>(df, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e, <span class="at">base_size =</span> <span class="dv">11</span>)</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>p3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p3, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>仙台と同様に2峰型であるが、ピークが2℃と20℃付近にあり、峰の間隔が仙台よりやや広く、峰と峰の間が平坦に見える。春・秋の気温分布が仙台より平坦（気温が安定している）といえるか？</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">plot_kde_two_periods</span>(df, <span class="dv">1961</span>, <span class="dv">1990</span>, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -842,14 +868,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p3, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p5, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_1961-1990_vs_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<p>仙台と同様、気温分布が暖候側にシフトしており、1991〜2020年がそれ以前より温かい期間になっていることがわかる。</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>p5 <span class="ot">&lt;-</span> <span class="fu">plot_kde_two_periods</span>(df, <span class="dv">1961</span>, <span class="dv">1990</span>, <span class="dv">1991</span>, <span class="dv">2020</span>, station_name_e)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>p5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">plot_kde_four_seasons</span>(df, <span class="at">station_name =</span> station_name_e, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.90</span>, <span class="fl">0.75</span>),<span class="at">base_size =</span> <span class="dv">11</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -860,27 +888,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p5, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_1961-1990_vs_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p6 <span class="ot">&lt;-</span> <span class="fu">plot_kde_four_seasons</span>(df, <span class="at">station_name =</span> station_name_e)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>p6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(p6, <span class="fu">glue</span>(station_name, <span class="st">"_Tmean_KDE_4seasons_1991-2020.png"</span>), paper_width, paper_height)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<section id="気温分布からみた季節の特色-1" class="level3">
+<h3 class="anchored" data-anchor-id="気温分布からみた季節の特色-1">気温分布からみた季節の特色</h3>
+<p>仙台の分布と比較すると、</p>
+<ul>
+<li>冬と夏がピーク付近に集中しているのは仙台と同様である。</li>
+<li>夏は仙台よりも分布が集中している。左側の裾が長くなっているのは仙台と同様である。</li>
+<li>夏・秋は峰型には見えない。むしろ春が2峰型に見える。</li>
+<li>夏・冬に比べると春・秋は分布の範囲が広いのは仙台と同様である。</li>
+</ul>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -889,13 +908,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 各季節のグラフをそれぞれ変数（p1〜p4）に格納する</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>p_spring <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>), </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>p_summer <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>), </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>p_autumn <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>), </span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.20</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>p_winter <span class="ot">&lt;-</span> <span class="fu">plot_kde_target_months</span>(df, <span class="at">target_months =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.75</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend_position =</span> <span class="fu">c</span>(<span class="fl">0.80</span>, <span class="fl">0.70</span>), <span class="at">title =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co"># patchworkを使って、2行2列の4パネルにまとめる</span></span>
 <span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co"># (| が横に並べる、/ が縦に並べるという意味になります)</span></span>
@@ -914,7 +933,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">&amp;</span> <span class="co"># ← ここが重要！全てのパネルに適用</span></span>
 <span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># --- 各パネルの微調整 ---</span></span>
 <span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),      <span class="co"># 各パネル（春・夏など）のタイトル</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),      <span class="co"># 各パネル（春・夏など）のタイトル</span></span>
 <span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),       <span class="co"># 軸ラベル（x, y軸の名前）</span></span>
 <span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),        <span class="co"># 軸の目盛り数字</span></span>
 <span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>),</span>
@@ -928,7 +947,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -942,7 +961,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="平均気温分布v2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -953,6 +972,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
