@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="岩渕　巧　(No.3682)">
+<meta name="dcterms.date" content="2026-06-06">
 
-<title>「秋の長さ」に関する解析レポート</title>
+<title>秋の長さの解析：気温分布の比較（全国版）</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,18 +25,18 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="index_files/libs/clipboard/clipboard.min.js"></script>
-<script src="index_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="index_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="index_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="index_files/libs/quarto-html/popper.min.js"></script>
-<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="index_files/libs/quarto-html/anchor.min.js"></script>
-<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="index_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="平均気温分布分解_全国版_files/libs/clipboard/clipboard.min.js"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/popper.min.js"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="平均気温分布分解_全国版_files/libs/quarto-html/anchor.min.js"></script>
+<link href="平均気温分布分解_全国版_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="平均気温分布分解_全国版_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="平均気温分布分解_全国版_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="平均気温分布分解_全国版_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="平均気温分布分解_全国版_files/libs/bootstrap/bootstrap-a74871fe4945b66d259aafc266475145.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -47,22 +49,40 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul class="collapse">
-  <li><a href="#東北支部例会発表資料" id="toc-東北支部例会発表資料" class="nav-link active" data-scroll-target="#東北支部例会発表資料">東北支部例会発表資料</a></li>
+  <li><a href="#前回の宿題" id="toc-前回の宿題" class="nav-link active" data-scroll-target="#前回の宿題">前回の宿題</a></li>
+  <li><a href="#追加検証信頼区間の付記" id="toc-追加検証信頼区間の付記" class="nav-link" data-scroll-target="#追加検証信頼区間の付記">追加検証（信頼区間の付記）</a></li>
+  <li><a href="#日本各地の平均気温解析" id="toc-日本各地の平均気温解析" class="nav-link" data-scroll-target="#日本各地の平均気温解析">日本各地の平均気温解析</a></li>
+  <li><a href="#各地の特徴" id="toc-各地の特徴" class="nav-link" data-scroll-target="#各地の特徴">各地の特徴</a></li>
+  <li><a href="#世界各地open-meteo6地点の解析" id="toc-世界各地open-meteo6地点の解析" class="nav-link" data-scroll-target="#世界各地open-meteo6地点の解析">世界各地（Open-Meteo）6地点の解析</a></li>
+  <li><a href="#世界6地点の気温分布比較" id="toc-世界6地点の気温分布比較" class="nav-link" data-scroll-target="#世界6地点の気温分布比較">世界6地点の気温分布比較</a></li>
   </ul>
-</nav>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="平均気温分布分解_全国版.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li><li><a href="slide_202606.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
 </div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">「秋の長さ」に関する解析レポート</h1>
+<h1 class="title">秋の長さの解析：気温分布の比較（全国版）</h1>
+<p class="subtitle lead">気象予報士会 東北支部6月例会</p>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>岩渕　巧　(No.3682) </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 6, 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -72,17 +92,181 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="東北支部例会発表資料" class="level2">
-<h2 class="anchored" data-anchor-id="東北支部例会発表資料">東北支部例会発表資料</h2>
+<section id="前回の宿題" class="level2">
+<h2 class="anchored" data-anchor-id="前回の宿題">前回の宿題</h2>
+<section id="確率密度関数の四季分割" class="level3">
+<h3 class="anchored" data-anchor-id="確率密度関数の四季分割">確率密度関数の四季分割</h3>
+<p>四季毎の確率密度関数を重ね合わせると通年の確率密度関数と一致するか？について以下の通り検証を行った。 確率密度関数ではなく、ヒストグラムの積み上げで比較してみる。</p>
+<hr>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-KDE" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-KDE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="平均気温分布分解_全国版_files/figure-html/fig-KDE-1.png" class="img-fluid figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-KDE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: 四季別確率密度曲線
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>通年のヒストグラムが <a href="#fig-hist1" class="quarto-xref">Figure&nbsp;2</a> 、四季別のヒストグラムを積み上げたものが <a href="#fig-hist2" class="quarto-xref">Figure&nbsp;3</a> である。</p>
+<hr>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="平均気温分布分解_全国版_files/figure-html/fig-hist1-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: 通年のヒストグラム
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="平均気温分布分解_全国版_files/figure-html/fig-hist2-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: 積み上げヒストグラム
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p><a href="#fig-hist1" class="quarto-xref">Figure&nbsp;2</a> と <a href="#fig-hist2" class="quarto-xref">Figure&nbsp;3</a> が一致していることから、四季ヒストグラム（確率密度関数）は妥当といえる。</p>
+</section>
+</section>
+<section id="追加検証信頼区間の付記" class="level2">
+<h2 class="anchored" data-anchor-id="追加検証信頼区間の付記">追加検証（信頼区間の付記）</h2>
+<div style="font-size: 0.8em;">
+<p>確率密度関数のプロットにブートストラップ法※による95%信頼区間を帯状に表示してみた（ <a href="#fig-boot" class="quarto-xref">Figure&nbsp;4</a> ）。 また、気象現象に特有の自己相関によってブレを過小評価することがあるため、数日〜数週間の「ブロック（塊）」ごとにデータをまとめてシャッフルする「ブロック・ブートストラップ法（Block Bootstrap）」で比較してみる（ <a href="#fig-block_boot" class="quarto-xref">Figure&nbsp;5</a>）。</p>
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="平均気温分布分解_全国版_files/figure-html/fig-boot-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: ブートストラップ法
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" data-widht="50%">
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-block_boot" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-block_boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="平均気温分布分解_全国版_files/figure-html/fig-block_boot-1.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-block_boot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: ブロックブートストラップ法
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>ブロックブートストラップ法による信頼区間は、ブートストラップ法による結果と大差ないことがわかった。</p>
+<div style="font-size:0.7em;">
+<p>※元のデータから重複を許して何度もランダムにサンプリングし（ここでは500回）、その都度KDEを計算する。 500本のKDEの「下位2.5%」と「上位97.5%」のラインを結ぶことで、ノンパラメトリックに95%信頼区間の「帯（Confidence Band）」を作成する。</p>
+</div>
+<hr>
+</section>
+<section id="日本各地の平均気温解析" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="日本各地の平均気温解析">日本各地の平均気温解析</h2>
+<p>日本の気候を代表する地点として8地点（札幌、仙台、山形、東京、大阪、福岡、那覇）を選び、それぞれの平均気温分布を解析してみた。データは全て気象庁の過去データである。</p>
+<p>左上から時計回りに、平均気温の推移（1991〜2020年の平均）、平均気温分布（1961〜1990年と1991〜2020年の比較）、平均気温分布の2分割（暖候期／寒候期）、平均気温分布の4分割（四季）である。</p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-1.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-2.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-3.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-4.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-5.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-6.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-7.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-jma-8.png" class="img-fluid" style="width:90.0%"></p>
+</section>
+<section id="各地の特徴" class="level2">
+<h2 class="anchored" data-anchor-id="各地の特徴">各地の特徴</h2>
 <ul>
-<li><a href="keynote/202511_report/">2025年11月例会:秋は本当に短くなっているのか</a></li>
-<li><a href="keynote/202512_report/">2025年12月例会:秋は本当に短くなっているのか　その2</a></li>
-<li><a href="keynote/202601_report/">2026年1月例会:秋は本当に短くなっているのか　その3</a></li>
-<li><a href="reports/生物季節観測相関.html">2026年2月例会:生物季節観測</a></li>
-<li><a href="reports/生物季節観測_長期トレンド除去.html">2026年3月例会:生物季節観測　長期トレンド除去</a></li>
-<li><a href="keynote/202604_report/">2026年4月例会:秋は本当に短くなっているのか　「二季化」検証</a></li>
-<li><a href="reports/平均気温分布v2.html">2026年5月例会:秋は本当に短くなっているのか　平均気温分布</a></li>
-<li><a href="reports/平均気温分布分解_全国版.html">2026年6月例会:秋は本当に短くなっているのか　平均気温分布　全国編</a></li>
+<li>札幌、山形の夏は綺麗な山形なのに対し、仙台、東京、大阪、福岡の夏は2峰型、これは梅雨の影響が考えられる</li>
+<li>南下するほど夏の高温部のピークが鋭くなり、鹿児島では顕著になる</li>
+<li>那覇は他の地点と形状が全く違い、各季節のばらつきが少ない，特に夏のばらつきの少なさが顕著である</li>
+</ul>
+</section>
+<section id="世界各地open-meteo6地点の解析" class="level2 scrollable">
+<h2 class="scrollable anchored" data-anchor-id="世界各地open-meteo6地点の解析">世界各地（Open-Meteo）6地点の解析</h2>
+<p>Open-Meteo（https://open-meteo.com）の再解析データから緯度経度指定で代表的な地点のデータを取得した。</p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-1.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-2.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-3.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-4.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-5.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-world-6.png" class="img-fluid" style="width:90.0%"></p>
+<hr>
+<ul>
+<li>ロンドンは四季があるが、春、秋、冬の形状が似ていること、分布区間がかなり重なり合っている</li>
+<li>ロンドンは高緯度に位置し、日平均気温が20℃に達することは無い、一方でマイナスにもなっていない</li>
+<li>ジャカルタは気温の年較差が3℃以内と非常に小さく、ほとんど四季が無いといえる</li>
+<li>カイロは一年を通して気温が高いが、夏と冬のピークの間隔がある程度広く、四季の変化はある</li>
+<li>北京は気温の年較差が30℃ほどあり、夏と冬の分布が全く交わらない</li>
+<li>ヤクーツクは冬に-40℃付近まで下がり寒冷であるが、夏は20℃近くまで上昇し、年較差は60℃弱もある</li>
+<li>シドニーは南半球に位置することから夏冬が逆転している、日本と違い、春と秋の形状が似ている</li>
+<li>ロンドンとシドニーが春秋の形状が似ているのは、西岸海洋性気候の特徴と言えるか（シドニーは東岸であるが、南半球なので西岸海洋性気候に分類される）</li>
+</ul>
+<hr>
+</section>
+<section id="世界6地点の気温分布比較" class="level2">
+<h2 class="anchored" data-anchor-id="世界6地点の気温分布比較">世界6地点の気温分布比較</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="平均気温分布分解_全国版_files/figure-html/process-all-star-1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<ul>
+<li>ヤクーツクの年較差の大きさ、ジャカルタの年較差の小ささが特徴的</li>
+<li>ロンドンとシドニーは緯度の関係で温度分布がやや異なるが、形状そのものは比較的似ている</li>
+<li>最も温かい気温を比較すると、ジャカルタよりカイロ、北京の方が高い、ジャカルタは海洋の影響で極端な高温にならず、内陸のカイロ、北京は極端な高温が発生するものと考えられる</li>
 </ul>
 </section>
 

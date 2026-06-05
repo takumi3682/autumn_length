@@ -1,0 +1,449 @@
+---
+title: "秋の長さの解析：気温分布の比較（全国版）"
+subtitle: "気象予報士会 東北支部6月例会"
+author: "岩渕　巧　(No.3682)"
+date: "2026-06-06"
+format:
+  html: default
+  pdf: default
+  revealjs: default
+---
+
+```{r}
+#| echo: false
+#| output: false
+
+library(here)
+library(purrr)
+library(tidyverse)
+library(arrow)
+library(cowplot)
+source(here("notebooks", "r", "theme.R"))
+source(here("src", "r", "analysis_season_length.R"))
+OUTPUT_DIR <- here("outputs")
+dir.create(OUTPUT_DIR, showWarnings = FALSE, recursive = TRUE)
+
+# ## 設定 チャンク内に追記
+font_size <- 12
+paper_width <- 10  # インチ
+paper_height <- 7  # インチ
+
+read_temp_parquet_OpenMeteo <- function(name_e,
+                                         base_dir = "/Volumes/Transcend/projects/MetData/Open-Meteo") {
+  
+  parquet_file <- file.path(
+    base_dir,
+    name_e,
+    paste0(name_e, "_master_1960_2024.parquet")
+  )
+  
+  # ファイルを読み込み、日付変換を安全に行う
+  df <- read_parquet(parquet_file)
+  
+  # もし元の列名が `date` ではなく `datetime` や `time` の場合は、
+  # 下の `date` の部分を実際の列名に書き換えてください。
+  df |>
+    mutate(
+      # lubridate::as_date は数値やPOSIXct型から日付への変換に強いです
+      date  = lubridate::as_date(datetime), 
+      year  = lubridate::year(datetime),
+      month = lubridate::month(datetime)
+    )
+}
+```
+
+## 前回の宿題
+### 確率密度関数の四季分割
+
+四季毎の確率密度関数を重ね合わせると通年の確率密度関数と一致するか？について以下の通り検証を行った。
+確率密度関数ではなく、ヒストグラムの積み上げで比較してみる。
+
+------------------------------------------------------------------------
+
+```{r}
+#| label: fig-KDE
+#| fig-cap: 四季別確率密度曲線
+#| out-width: "90%"
+
+station_id   <- "b47590"
+station_name <- "仙台"
+station_name_e <- "Sendai"
+
+df_sendai <- read_temp_parquet(station_id)
+
+df_plot <- df_sendai |>
+  filter(year >= 1991 & year <= 2020) |>
+  filter(!is.na(temp_mean), is.finite(temp_mean)) |>
+  add_4season()
+
+p6 <- plot_kde_four_seasons(df_plot, station_name = station_name_e,
+                            legend_position = c(0.90,0.80))
+print(p6)
+```
+
+通年のヒストグラムが @fig-hist1 、四季別のヒストグラムを積み上げたものが @fig-hist2 である。
+
+---
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| label: fig-hist1
+#| fig-cap: 通年のヒストグラム
+#| out-width: "100%"
+#| echo: false
+#| fig-width: 5       # ← 【追加】元画像の横幅を5に固定
+#| fig-asp: 0.75      # ← 【追加】縦の長さを横幅の75%に固定
+
+p0 <- plot_hist_period(df_plot, 1991, 2020, station_name_e, base_size = 12)
+print(p0)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| label: fig-hist2
+#| fig-cap: 積み上げヒストグラム
+#| echo: false
+#| out-width: "100%"
+#| fig-width: 5       # ← 【追加】元画像の横幅を5に固定
+#| fig-asp: 0.75      # ← 【追加】縦の長さを横幅の75%に固定
+
+p_stack_hist <- ggplot(df_plot, aes(x = temp_mean, fill = season4)) +
+  geom_histogram(position = "stack", bins = 40, alpha = 0.7, color = "white", linewidth = 0.1) +
+  labs(title = "Seasonal Contribution...", x = "...", y = "...", fill = NULL) +
+  theme_presentation(base_size = 12,legend_position = c(0.90,0.75)) +
+  theme(legend.key.size = unit(0.4, "cm"))
+print(p_stack_hist)
+```
+:::
+
+:::
+
+@fig-hist1 と @fig-hist2 が一致していることから、四季ヒストグラム（確率密度関数）は妥当といえる。
+
+## 追加検証（信頼区間の付記）
+
+::: {style="font-size: 0.8em;"}
+確率密度関数のプロットにブートストラップ法※による95%信頼区間を帯状に表示してみた（ @fig-boot ）。
+また、気象現象に特有の自己相関によってブレを過小評価することがあるため、数日〜数週間の「ブロック（塊）」ごとにデータをまとめてシャッフルする「ブロック・ブートストラップ法（Block Bootstrap）」で比較してみる（ @fig-block_boot）。
+:::
+
+::: {.columns}
+
+::: {.column width="50%"}
+```{r}
+#| label: fig-boot
+#| fig-cap: ブートストラップ法
+#| out-width: "100%"
+#| fig-width: 5       # ← 【追加】元画像の横幅を5に固定
+#| fig-asp: 0.75      # ← 【追加】縦の長さを横幅の75%に固定
+
+# --- 設定 ---
+B <- 500          # ブートストラップの反復回数（実用上は500〜1000回程度）
+grid_points <- 512 # KDEを評価する共通のx軸の点（気温）の数
+
+# 元データ（df）から気温の最小・最大値を取得し、共通のx軸グリッドを作成
+x_range <- range(df_plot$temp_mean, na.rm = TRUE)
+x_grid <- seq(x_range[1] - 2, x_range[2] + 2, length.out = grid_points)
+
+
+# --- 1 & 2. ブートストラップ計算ループ ---
+# 各季節（season4）ごとに処理を実行
+# --- 1 & 2. ブートストラップ計算ループ（NA排除版） ---
+boot_results <- df_plot %>%
+  # 計算前に temp_mean が NA の行を完全に除外する
+  filter(!is.na(temp_mean)) %>% 
+  group_split(season4) %>%
+  map_dfr(function(sub_df) {
+    current_season <- unique(sub_df$season4)
+    n <- nrow(sub_df)
+    
+    # 万が一、ある季節のデータが丸ごと空になってしまった場合の安全弁
+    if (n == 0) return(NULL) 
+    
+    boot_matrix <- matrix(NA, nrow = grid_points, ncol = B)
+    
+    for (b in 1:B) {
+      boot_sample <- sample(sub_df$temp_mean, size = n, replace = TRUE)
+      
+      # na.rm = TRUE を念のため sample 側ではなく density 側にも意識（基本 filter で消えていますが安全のため）
+      kde_boot <- density(boot_sample, from = min(x_grid), to = max(x_grid), n = grid_points)
+      boot_matrix[, b] <- kde_boot$y
+    }
+    
+    tibble(
+      season4 = current_season,
+      temp_mean = x_grid,
+      density_med = apply(boot_matrix, 1, median),
+      lower_95    = apply(boot_matrix, 1, quantile, probs = 0.025),
+      upper_95    = apply(boot_matrix, 1, quantile, probs = 0.975)
+    )
+  })
+
+# --- 3. ggplot2 による可視化 ---
+# 元データのオリジナルKDEの線（現在のグラフ）も重ねるため、
+# あらかじめ元のKDEデータを作っておくと綺麗に重なります
+ggplot(boot_results, aes(x = temp_mean, group = season4)) +
+  # 95%信頼区間の帯を描画（alphaで透明度を調整）
+  geom_ribbon(aes(ymin = lower_95, ymax = upper_95, fill = season4), alpha = 0.2) +
+  # 中心線としてブートストラップの中央値（または元のKDE）を描画
+  geom_line(aes(y = density_med, color = season4), linewidth = 0.8) +
+  # カラーや見た目の調整（お好みの色を scale_color_manual 等で指定してください）
+  labs(
+    title = "Seasonal KDE with 95% Bootstrap Confidence Bands",
+    x = "Daily Mean Temperature (°C)",
+    y = "Density"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+```
+:::
+
+::: {.column widht="50%"}
+```{r}
+#| label: fig-block_boot
+#| fig-cap: ブロックブートストラップ法
+#| out-width: "100%"
+#| fig-width: 5       # ← 【追加】元画像の横幅を5に固定
+#| fig-asp: 0.75      # ← 【追加】縦の長さを横幅の75%に固定
+
+library(boot)
+
+# --- 1. 1回分の計算ルールを定義 ---
+# tsboot用の関数は、indices（インデックス）ではなく
+# 切り出された「時系列データそのもの（tseries）」が直接渡されます
+kde_tsboot_func <- function(tseries) {
+  # 渡された疑似時系列データ（tseries）を使ってKDEを計算
+  kde_res <- density(tseries, from = min(x_grid), to = max(x_grid), n = grid_points)
+  return(kde_res$y)
+}
+
+# --- 2. tsbootの実行 ---
+# 例として、冬（Winter）のデータに対して実行
+winter_data <- df_plot %>% filter(season4 == "Winter") %>% pull(temp_mean)
+
+tsboot_out <- tsboot(
+  tseries = winter_data, 
+  statistic = kde_tsboot_func, 
+  R = 500,               # 反復回数
+  l = 7,                 # ブロックサイズ（例：7日間の塊でシャッフル）
+  sim = "fixed"          # 固定長ブロックを指定
+)
+
+# あとは先ほどと同様に tsboot_out$t から2.5%点、97.5%点を取り出します
+
+p <- ggplot(boot_results, aes(x = temp_mean, group = season4)) +
+  # 95%信頼区間の帯を描画（alphaで透明度を調整）
+  geom_ribbon(aes(ymin = lower_95, ymax = upper_95, fill = season4), alpha = 0.2) +
+  # 中心線としてブートストラップの中央値（または元のKDE）を描画
+  geom_line(aes(y = density_med, color = season4), linewidth = 0.8) +
+  # カラーや見た目の調整（お好みの色を scale_color_manual 等で指定してください）
+  labs(
+    title = "Seasonal KDE with 95% Block Bootstrap Confidence Bands",
+    x = "Daily Mean Temperature (°C)",
+    y = "Density"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+print(p)
+```
+:::
+
+:::
+
+ブロックブートストラップ法による信頼区間は、ブートストラップ法による結果と大差ないことがわかった。
+
+::: {style="font-size:0.7em;"}
+※元のデータから重複を許して何度もランダムにサンプリングし（ここでは500回）、その都度KDEを計算する。
+500本のKDEの「下位2.5%」と「上位97.5%」のラインを結ぶことで、ノンパラメトリックに95%信頼区間の「帯（Confidence Band）」を作成する。
+:::
+---
+
+
+## 日本各地の平均気温解析 {.scrollable}
+
+日本の気候を代表する地点として8地点（札幌、仙台、山形、東京、大阪、福岡、那覇）を選び、それぞれの平均気温分布を解析してみた。データは全て気象庁の過去データである。
+
+左上から時計回りに、平均気温の推移（1991〜2020年の平均）、平均気温分布（1961〜1990年と1991〜2020年の比較）、平均気温分布の2分割（暖候期／寒候期）、平均気温分布の4分割（四季）である。
+
+```{r}
+#| label: process-jma
+#| fig-width: 14
+#| fig-height: 10
+#| out-width: "90%"
+#| output: asis   # ← 【追加1】Rの中からMarkdownのレイアウト記号を出力する許可を出す
+
+# マスターデータフレームの定義
+stations_jma <- data.frame(
+  type   = "JMA",
+  id     = c("b47412", "b47590", "b47588", "b47662", "b47772", "b47807", "b47827", "b47936"),
+  name   = c("札幌", "仙台", "山形", "東京", "大阪", "福岡", "鹿児島", "那覇"),
+  name_e = c("Sapporo", "Sendai", "Yamagata", "Tokyo", "Osaka", "Fukuoka", "Kagoshima", "Naha"),
+  stringsAsFactors = FALSE
+)
+
+stations_world <- data.frame(
+  type   = "Open-Meteo",
+  id     = NA, 
+  name   = c("ロンドン", "ジャカルタ", "カイロ", "北京", "ヤクーツク", "シドニー"),
+  name_e = c("London", "Jakarta", "Cairo", "Beijing", "Yakutsk", "Sydney"),
+  stringsAsFactors = FALSE
+)
+
+stations_all <- rbind(
+  stations_jma[, c("type", "id", "name", "name_e")],
+  stations_world[, c("type", "id", "name", "name_e")]
+)
+
+# プロット処理
+x_limits <- c(-15, 35)
+y_limits <- c(0, 0.2)
+
+stations_all |> 
+  dplyr::filter(type == "JMA") |> 
+  pwalk(function(type, id, name, name_e) {
+    df <- read_temp_parquet(id)
+    
+    p0 <- plot_daily_climatology_period(data = df, start_year = 1991, end_year = 2020, station_name = name_e)
+    p5 <- plot_kde_two_periods(data = df, start1 = 1961, end1 = 1990, start2 = 1991, end2 = 2020, station_name = name_e, base_size = 11, x_limits = x_limits, y_limits = y_limits, legend_position = "bottom")
+    p4 <- plot_kde_warm_cold_total(data = df, start_year = 1991, end_year = 2020, station_name = name_e, base_size = 11, x_limits = x_limits, y_limits = y_limits, legend_position = "bottom")
+    p6 <- plot_kde_four_seasons(data = df, station_name = name_e, base_size = 11, x_limits = x_limits, y_limits = y_limits, legend_position = "bottom")
+    
+    combined_plot_grid <- cowplot::plot_grid(p0, p5, p4, p6, ncol = 2, nrow = 2)
+    
+    title_theme <- ggdraw() + 
+      draw_label(paste("Japan Climate Analysis Summary:", name, paste0("(", name_e, ")")), 
+                 fontface = 'bold', size = 18, hjust = 0.5)
+                 
+    combined_plot <- cowplot::plot_grid(title_theme, combined_plot_grid, ncol = 1, rel_heights = c(0.1, 0.9))
+    
+    # -----------------------------------------------------------------
+    # 【追加2】ここがキモ！ グラフを出す直前に、スライドの「改ページ」記号を自動で打ち出す
+    cat("\n\n---\n\n")
+    # -----------------------------------------------------------------
+    
+    print(combined_plot)
+    
+    # グラフの後ろにもエラー防止用の空行を確保
+    cat("\n\n") 
+    
+    png_filename = paste0("plot_summary_jma_", name_e, ".png")
+    ggsave(filename = png_filename, plot = combined_plot, width = 14, height = 10, dpi = 300)
+  })
+```
+
+## 各地の特徴
+
+- 札幌、山形の夏は綺麗な山形なのに対し、仙台、東京、大阪、福岡の夏は2峰型、これは梅雨の影響が考えられる
+- 南下するほど夏の高温部のピークが鋭くなり、鹿児島では顕著になる
+- 那覇は他の地点と形状が全く違い、各季節のばらつきが少ない，特に夏のばらつきの少なさが顕著である
+
+## 世界各地（Open-Meteo）6地点の解析 {.scrollable}
+
+Open-Meteo（https://open-meteo.com）の再解析データから緯度経度指定で代表的な地点のデータを取得した。
+
+```{r}
+#| label: process-world
+#| fig-width: 14
+#| fig-height: 10
+#| out-width: "90%"
+#| output: asis
+
+# 🌟 世界版は各都市のレンジに自動フィットさせるため、limitsの固定値は定義しません。
+# 🌟 競合の元になる pdf() も一切使いません。
+
+stations_all |> 
+  dplyr::filter(type == "Open-Meteo") |> 
+  pwalk(function(type, id, name, name_e) {
+    
+    df <- read_temp_parquet_OpenMeteo(name_e) 
+    
+    # --- 各図の生成 ---
+    p0 <- plot_daily_climatology_period(data = df, start_year = 1991, end_year = 2020, station_name = name_e)
+    p5 <- plot_kde_two_periods(data = df, start1 = 1961, end1 = 1990, start2 = 1991, end2 = 2020, station_name = name_e, base_size = 11, x_limits = NULL, y_limits = NULL, legend_position = "bottom")
+    p4 <- plot_kde_warm_cold_total(data = df, start_year = 1991, end_year = 2020, station_name = name_e, base_size = 11, x_limits = NULL, y_limits = NULL, legend_position = "bottom")
+    p6 <- plot_kde_four_seasons(data = df, station_name = name_e, base_size = 11, x_limits = NULL, y_limits = NULL, legend_position = "bottom")
+    
+    # cowplotを使って2×2に安全に結合
+    combined_plot_grid <- cowplot::plot_grid(p0, p5, p4, p6, ncol = 2, nrow = 2)
+    
+    # 全体のタイトルを付与
+    title_theme <- ggdraw() + 
+      draw_label(paste("Global Climate Analysis Summary:", name, paste0("(", name_e, ")")), 
+                 fontface = 'bold', size = 18, hjust = 0.5)
+                 
+    # タイトルとグラフ枠を縦に結合
+    combined_plot <- cowplot::plot_grid(title_theme, combined_plot_grid, ncol = 1, rel_heights = c(0.1, 0.9))
+    
+    cat("\n\n---\n\n")
+
+    # 🌟 標準の print 文で画面に出力
+    print(combined_plot)
+    
+    # HTMLレポート用の個別画像（PNG）を個別に書き出し
+    png_filename = paste0("plot_summary_world_", name_e, ".png")
+    ggsave(filename = png_filename, plot = combined_plot, width = 14, height = 10, dpi = 300)
+  })
+```
+
+---
+
+- ロンドンは四季があるが、春、秋、冬の形状が似ていること、分布区間がかなり重なり合っている
+- ロンドンは高緯度に位置し、日平均気温が20℃に達することは無い、一方でマイナスにもなっていない 
+- ジャカルタは気温の年較差が3℃以内と非常に小さく、ほとんど四季が無いといえる
+- カイロは一年を通して気温が高いが、夏と冬のピークの間隔がある程度広く、四季の変化はある
+- 北京は気温の年較差が30℃ほどあり、夏と冬の分布が全く交わらない
+- ヤクーツクは冬に-40℃付近まで下がり寒冷であるが、夏は20℃近くまで上昇し、年較差は60℃弱もある
+- シドニーは南半球に位置することから夏冬が逆転している、日本と違い、春と秋の形状が似ている
+- ロンドンとシドニーが春秋の形状が似ているのは、西岸海洋性気候の特徴と言えるか（シドニーは東岸であるが、南半球なので西岸海洋性気候に分類される）
+
+---
+
+## 世界6地点の気温分布比較
+
+```{r}
+#| label: process-all-star
+#| out-width: "90%"
+
+all_file_paths <- file.path(
+  "/Volumes/Transcend/projects/MetData/Open-Meteo",
+  stations_all$name_e,
+  paste0(stations_all$name_e, "_master_1960_2024.parquet")
+)
+
+df_all_master <- all_file_paths |>
+  purrr::keep(file.exists) |>
+  purrr::map_df(function(path) {
+    city_name <- basename(dirname(path))
+    arrow::read_parquet(path) |> 
+      dplyr::mutate(city = city_name)
+  })
+
+if (nrow(df_all_master) > 0) {
+  p_all_star <- ggplot(df_all_master, aes(x = temp_mean, color = city, fill = city)) +
+    geom_density(alpha = 0.05, linewidth = 0.8) + 
+    xlim(-50, 40) + 
+    ylim(0, 0.4) +
+    theme_minimal(base_size = 14) +
+    labs(
+      title = "Global Climate Comparison: The Dynamic Range of Earth",
+      x = "Daily Mean Temperature (°C)", y = "Density",
+      color = "City", fill = "City"
+    ) +
+    theme(legend.position = "right", plot.title = element_text(face = "bold", hjust = 0.5))
+
+  print(p_all_star)
+#  ggsave(filename = "plot_global_all_star.png", plot = p_all_star, width = 14, height = 10, dpi = 300)
+} else {
+#  cat("⚠️ 警告: 結合できる都市別マスターファイルが見つかりませんでした。\n")
+}
+```
+
+---
+- ヤクーツクの年較差の大きさ、ジャカルタの年較差の小ささが特徴的
+- ロンドンとシドニーは緯度の関係で温度分布がやや異なるが、形状そのものは比較的似ている
+- 最も温かい気温を比較すると、ジャカルタよりカイロ、北京の方が高い、ジャカルタは海洋の影響で極端な高温にならず、内陸のカイロ、北京は極端な高温が発生するものと考えられる

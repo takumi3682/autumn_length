@@ -8,7 +8,7 @@ format:
     toc: true
     toc-depth: 2
     code-fold: true   # コードを折りたたんで表示（クリックで展開）
-    embed-resources: false # ture ならHTML1枚にすべて埋め込む（配布に便利）
+    embed-resources: false # true ならHTML1枚にすべて埋め込む（配布に便利）
     theme: cosmo
 execute:
   warning: false
@@ -486,9 +486,9 @@ p2
 2峰型が明瞭に現れた。 これを確率密度関数で表してみる。
 
 ```{r}
-p3 <- plot_kde_period(df, 1991, 2020, station_name_e)
+p3 <- plot_kde_period(df, 1991, 2020, station_name_e, base_size = 11)
 p3
-save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
+#save_png(p3, glue(station_name, "_Tmean_KDE_1991-2020.png"), paper_width, paper_height)
 ```
 
 2℃と18℃付近にピークを持つ2峰型といえる。
